@@ -1,7 +1,12 @@
 .Calculator {
   background-color: #18471e;
   color: rgb(219, 204, 204);
-  font-size: calc(10px + 2vmin);
+  font-size: calc(1.5em);
+}
+
+.Calculator h1 {
+  margin-top: 0;
+  padding: 20px;
 }
 
 .App-link {
@@ -92,8 +97,28 @@ button {
   min-height: 80vh;
 }
 
+/* Container for the Dealer's Card */
+.dealer-display {
+  width: 140px; /* This defines the width of the box */
+  height: 200px; /* This defines the height of the box */
+  border-radius: 15px;
+  border: 10px solid rgb(196, 201, 34);
+  margin: 20px auto;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  font-size: 45px;
+}
+
+.dealer-text {
+  transform: rotate(-45deg); /* Rotates the text */
+  position: absolute; /* Absolute positioning */
+  top: 50%; /* Vertically centers the text */
+  left: 50%; /* Horizontally centers the text */
+  transform: translate(-50%, -50%) rotate(60deg); /* Moves the center of the text to the center of the box and then rotates it */
+}
+
 .hand-display,
-.dealer-display,
 .best-play {
   border: 1px solid white;
   padding: 10px;

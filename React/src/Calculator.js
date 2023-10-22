@@ -55,10 +55,11 @@ function Calculator() {
 
         {/* Middle Display Section */}
         <div className="middle-display">
-          <section>
-            <h2>Dealer's Card</h2>
-            <div className="dealer-display"></div>
-          </section>
+        <section>
+    <div className="dealer-display">
+        <span className="dealer-text">Dealer</span>
+    </div>
+</section>
 
           <section>
             <h2>Best Play</h2>
