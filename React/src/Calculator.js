@@ -3,12 +3,7 @@ import { Link } from 'react-router-dom';
 import './Calculator.css';
 import './App.css';
 
-
 function Calculator() {
-
-
-
-
   const [playerHand, setPlayerHand] = useState([]);
   const [dealerCard, setDealerCard] = useState(null);
 
@@ -21,19 +16,19 @@ function Calculator() {
   };
 
   return (
-
-<div>
+    <div>
+      {/* Navbar */}
       <nav className="calculator-nav">
         <ul>
           <li><Link to="/">Back to Home</Link></li>
         </ul>
       </nav>
 
-
-    <div className="Calculator">
-      <header className="Calc-header">
+      <div className="Calculator">
+        {/* Optimal Play Calculator Title */}
         <h1>Optimal Play Calculator</h1>
 
+        {/* Card Selection */}
         <div className="card-sections">
           <section className="dealer-card-section">
             <h2>Dealer's Card</h2>
@@ -42,8 +37,7 @@ function Calculator() {
                 <button key={card} onClick={() => handleCardClick(card)}>
                   {card}
                 </button>
-              ))
-              }
+              ))}
             </div>
           </section>
 
@@ -54,36 +48,29 @@ function Calculator() {
                 <button key={card} onClick={() => handleCardClick(card)}>
                   {card}
                 </button>
-              ))
-              }
+              ))}
             </div>
           </section>
         </div>
 
-
-
+        {/* Middle Display Section */}
         <div className="middle-display">
           <section>
             <h2>Dealer's Card</h2>
-            <div className="dealer-display">
-            </div>
+            <div className="dealer-display"></div>
           </section>
 
           <section>
             <h2>Player's Hand</h2>
-            <div className="hand-display">
-            </div>
+            <div className="hand-display"></div>
           </section>
 
           <section>
             <h2>Best Play</h2>
-            <div className="best-play">
-            </div>
+            <div className="best-play"></div>
           </section>
         </div>
-
-      </header>
-    </div>
+      </div>
     </div>
   );
 }

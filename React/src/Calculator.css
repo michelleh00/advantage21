@@ -13,21 +13,14 @@
     }
   }
   
-  .Calc-header {
+  .Calculator {
     background-color: #18471e;
-    min-height: 0vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    color: rgb(219, 204, 204);
     font-size: calc(10px + 2vmin);
-    color: white;
-    padding-top: 10px;
-    text-align: center;
   }
   
   .App-link {
-    color: #61dafb;
+    color: #fb6161;
   }
   
   .hand {
@@ -54,7 +47,6 @@
     width: 60px;
     height: 80px;
     text-align: center;
-  
     display: flex;
     justify-content: center;
     align-items: center;
@@ -62,8 +54,8 @@
   
   }
   
-  button:hover {
-    background-color: #d84f4f;
+  .card-sections button:hover {
+    background-color: #e05151;
   }
   
   .card-selection {
@@ -83,19 +75,17 @@
     grid-column: 1 / span 3; 
   }
   
-  
-  
-  
-  
   .card-sections {
     display: flex;
     justify-content: space-between;
     width: 100%;
     position: absolute;
-    top: 150px;
+    top: 250px;
     left: 0;
     right: 0;
   }
+
+
   
   .dealer-card-section {
     justify-content: flex-start;
@@ -107,7 +97,7 @@
   .player-card-section {
     justify-content: flex-start;
     align-items: center;
-    width: 350px;
+    width: 375px;
     margin-right: 5%;
   }
   
@@ -132,12 +122,5 @@
     font-size: 1.5em;
   }
   
-  @keyframes App-logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
+
   
