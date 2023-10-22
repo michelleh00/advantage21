@@ -61,14 +61,16 @@ function Calculator() {
           </section>
 
           <section>
+            <h2>Best Play</h2>
+            <div className="best-play"></div>
+          </section>
+
+          <section>
             <h2>Player's Hand</h2>
             <div className="hand-display"></div>
           </section>
 
-          <section>
-            <h2>Best Play</h2>
-            <div className="best-play"></div>
-          </section>
+
         </div>
       </div>
     </div>
