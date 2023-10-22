@@ -58,11 +58,8 @@ button:hover {
 
 
 
-
-
-/* Specific Navigation Styles for Calculator */
 .calculator-nav {
-  background-color: #444;  /* Darker background for differentiation */
+  background-color: #444;
   height: 60px;
   display: flex;
   justify-content: center;

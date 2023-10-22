@@ -9,10 +9,6 @@ function App() {
   return (
     <Router>
       <div>
-        {/* Navigation */}
-
-
-        {/* Routes */}
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/calculator" element={<PlayCalculator />} />
