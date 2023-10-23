@@ -75,6 +75,15 @@ button {
   right: 0;
 }
 
+.card-image {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  margin: auto;
+  z-index: 2;
+}
+
+
 .dealer-card-section {
   justify-content: flex-start;
   align-items: center;
@@ -97,10 +106,9 @@ button {
   min-height: 80vh;
 }
 
-/* Container for the Dealer's Card */
 .dealer-display {
-  width: 140px; /* This defines the width of the box */
-  height: 200px; /* This defines the height of the box */
+  width: 140px;
+  height: 200px;
   border-radius: 15px;
   border: 10px solid rgb(196, 201, 34);
   margin: 20px auto;
@@ -111,11 +119,13 @@ button {
 }
 
 .dealer-text {
-  transform: rotate(-45deg); /* Rotates the text */
-  position: absolute; /* Absolute positioning */
-  top: 50%; /* Vertically centers the text */
-  left: 50%; /* Horizontally centers the text */
-  transform: translate(-50%, -50%) rotate(60deg); /* Moves the center of the text to the center of the box and then rotates it */
+  z-index: 1;
+  opacity: .6;
+  transform: rotate(-45deg);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(60deg); 
 }
 
 .hand-display,

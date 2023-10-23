@@ -11,9 +11,11 @@ function Calculator() {
     if (type === 'player') {
       setPlayerHand(prevHand => [...prevHand, card]);
     } else if (type === 'dealer') {
+      console.log("Setting dealer card to:", card); // Add this
       setDealerCard(card);
     }
   };
+
 
   return (
     <div>
@@ -25,7 +27,6 @@ function Calculator() {
       </nav>
 
       <div className="Calculator">
-        {/* Optimal Play Calculator Title */}
         <h1>Optimal Play Calculator</h1>
 
         {/* Card Selection */}
@@ -34,7 +35,7 @@ function Calculator() {
             <h2>Dealer's Card</h2>
             <div className="card-selection">
               {['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'].map(card => (
-                <button key={card} onClick={() => handleCardClick(card)}>
+                <button key={card} onClick={() => handleCardClick(card, 'dealer')}>
                   {card}
                 </button>
               ))}
@@ -55,11 +56,15 @@ function Calculator() {
 
         {/* Middle Display Section */}
         <div className="middle-display">
-        <section>
-    <div className="dealer-display">
-        <span className="dealer-text">Dealer</span>
-    </div>
-</section>
+          <section>
+            <div className="dealer-display">
+              {dealerCard && <img src={`/resources/${dealerCard}.png`} alt={`${dealerCard} card`} className="card-image" />}
+              <div className="dealer-text">Dealer</div>
+            </div>
+          </section>
+
+
+
 
           <section>
             <h2>Best Play</h2>
