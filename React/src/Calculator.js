@@ -7,15 +7,21 @@ function Calculator() {
   const [playerHand, setPlayerHand] = useState([]);
   const [dealerCard, setDealerCard] = useState(null);
 
+  // Button logic here. Just swaps between if the tag is from
+  // the player or dealer section of the buttons.
+  // React uses a 'useState' function, it takes two elements, the value and the
+  // function to be applied to update the value. Here we are using a spread operator
+  // [...prevHand, card] that bascially copies the previous array (prevHand) and then
+  // appends 'card' to the new array.
   const handleCardClick = (card, type) => {
     if (type === 'player') {
       setPlayerHand(prevHand => [...prevHand, card]);
     } else if (type === 'dealer') {
-      console.log("Setting dealer card to:", card); // Add this
       setDealerCard(card);
     }
   };
 
+  // Clears the cards from both dealer and player containers.
   const resetHands = () => {
     setPlayerHand([]);
     setDealerCard(null);
@@ -94,7 +100,7 @@ function Calculator() {
                 );
               })}
             </div>
-            <div className="hand-text">Player Area</div>
+            <div className="hand-area-text">Player Area</div>
 
           </section>
 
