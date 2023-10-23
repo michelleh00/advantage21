@@ -13,7 +13,8 @@ function HomePage() {
         </ul>
       </nav>
 
-      <h1>Welcome to the Blackjack App!</h1>
+      <h1>Advantage 21!</h1>
+      <h2>Lets make this link to optimal play/trainer</h2>
     </div>
   );
 }

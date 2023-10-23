@@ -46,7 +46,7 @@ function Calculator() {
           </section>
 
           <section className="player-card-section">
-            <h2>Select Player's Cards</h2>
+            <h2>Player's Cards</h2>
             <div className="card-selection">
               {['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'].map(card => (
                 <button key={card} onClick={() => handleCardClick(card, 'player')}>
@@ -54,7 +54,7 @@ function Calculator() {
                 </button>
               ))}
             </div>
-            <button onClick={resetHands}>Reset</button> {/* Place the button here */}
+            <button className="reset-button" onClick={resetHands}>Reset</button>
           </section>
 
         </div>
@@ -69,24 +69,24 @@ function Calculator() {
           </section>
 
           <section>
-            <h2>Best Play</h2>
+            <h2>Best Play Text Goes Here</h2>
             <div className="best-play"></div>
           </section>
 
-          <section>
-            <h2>Player's Hand</h2>
+          <section className="player-hand-section">
             <div className="player-hand-container">
               {playerHand.map((card, index) => {
                 const totalCards = playerHand.length;
-                const middleIndex = (totalCards - 1) / 2; // This gets the center card for odd numbers of cards
+                const middleIndex = (totalCards - 1) / 2;
                 const offset = index - middleIndex;
-                const rotationDegree = offset * 10; // This determines how much each card rotates. Adjust as needed.
+                const rotationDegree = offset * 10;
 
                 return (
                   <img
                     src={`/resources/${card}.png`}
                     alt={`${card} card`}
                     className="card-in-hand"
+                    key={index}
                     style={{
                       transform: `translateX(${index * 30 - (totalCards * 15)}px) rotate(${rotationDegree}deg)`
                     }}
@@ -94,6 +94,8 @@ function Calculator() {
                 );
               })}
             </div>
+            <div className="hand-text">Player Area</div>
+
           </section>
 
         </div>
