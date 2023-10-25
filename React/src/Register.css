@@ -1,0 +1,30 @@
+.register-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.error {
+    color: red;
+    margin-top: 5px;
+}
+
+.form-field {
+    margin-bottom: 10px;
+}
+
+.register-btn {
+    margin-bottom: 50px;
+    width: 15%;
+    align-self: center;
+    color: white;
+    border: none;
+    height: 42px;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: 0.35s;
+    background: rgb(42, 80, 61);
+
+}
