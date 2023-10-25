@@ -4,6 +4,7 @@ import HomePage from './HomePage';
 import PlayCalculator from './Calculator';
 import Register from './Register';
 import Contact from './Contact';
+import Login from './Login';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/calculator" element={<PlayCalculator />} />
           <Route path="/register" element={<Register />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </div>
     </Router>

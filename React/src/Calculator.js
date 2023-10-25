@@ -79,6 +79,7 @@ function Calculator() {
             <div className="best-play"></div>
           </section>
 
+
           <section className="player-hand-section">
             <div className="player-hand-container">
               {playerHand.map((card, index) => {
@@ -110,4 +111,8 @@ function Calculator() {
   );
 }
 
+          // When adding cards you the player area, we keep track of the middle of the hand,
+          // we then move the card slightly left and then rotate 10 degrees for each card added
+          // so it creates a 'splay effect' with the cards.
+          // TODO? Maybe limit the hand to a theoretical max of 11 cards.
 export default Calculator;

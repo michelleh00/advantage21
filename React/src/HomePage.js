@@ -10,6 +10,7 @@ function HomePage() {
           <li><Link to="/calculator">Play Calculator</Link></li>
           <li><Link to="/register">Register</Link></li>
           <li><Link to="/contact">Contact</Link></li>
+          <li><Link to="/login">Login</Link></li>
         </ul>
       </nav>
 
