@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from './Auth';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
-  // using this as a placeholder for when we link to our database.
   const handleLogin = () => {
-    console.log("Username:", username, "Password:", password);
+    login(username, password);
+    navigate('/');
+
   };
 
   return (
