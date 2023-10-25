@@ -27,24 +27,21 @@ function Login() {
         </ul>
       </nav>
       <h2>Login</h2>
-      <div>
+      <div class = 'login-container'>
         <label>Username</label>
         <input 
           value={username} 
           onChange={(e) => setUsername(e.target.value)}
         />
-      </div>
-      <div>
         <label>Password</label>
         <input
           value={password} 
           onChange={(e) => setPassword(e.target.value)}
         />
-      </div>
-      <button className="login-btn" onClick={handleLogin}>Login</button>
-      <div>
+        <button className="login-btn" onClick={handleLogin}>Login</button>
         Don't have an account? <Link to="/register">Sign up here!</Link>
       </div>
+
     </div>
   );
 }
