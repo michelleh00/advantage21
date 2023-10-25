@@ -33,24 +33,28 @@ function Login() {
           </li>
         </ul>
       </nav>
-      <h2>Login</h2>
-      <div>
-        <label>Username</label>
-        <input 
-          value={username} 
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Password</label>
-        <input
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <button onClick={handleLogin}>Login</button>
-      <div>
-        Don't have an account? <Link to="/register">Sign up here!</Link>
+      <div className="login-container">
+        <h2>Login</h2>
+        <div className="form-field">
+          <label>Username</label>
+          <input
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div className="form-field">
+          <label>Password</label>
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <button className="login-btn" onClick={handleLogin}>
+          Login
+        </button>
+        <div>
+          Don't have an account? <Link to="/register">Sign up here!</Link>
+        </div>
       </div>
     </div>
   );
