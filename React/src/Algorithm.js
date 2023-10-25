@@ -30,7 +30,6 @@ export function get_best_action(playerHand, dealerCard) {
 
   const basic_chart = {
     
-
         21: {
             '2': 'Stand',
             '3': 'Stand',
@@ -46,8 +45,6 @@ export function get_best_action(playerHand, dealerCard) {
             'Q': 'Stand',
             'K': 'Stand',
         },
-
-
 
         20: {
             '2': 'Stand',
@@ -65,9 +62,6 @@ export function get_best_action(playerHand, dealerCard) {
             'K': 'Stand',
         },
 
-
-
-
         19: {
             '2': 'Stand',
             '3': 'Stand',
@@ -84,10 +78,6 @@ export function get_best_action(playerHand, dealerCard) {
             'K': 'Stand',
         },
 
-
-
-
-
         18: {
             '2': 'Stand',
             '3': 'Stand',
@@ -103,7 +93,6 @@ export function get_best_action(playerHand, dealerCard) {
             'Q': 'Stand',
             'K': 'Stand',
         },
-
     
         17: {
             '2': 'Stand',
@@ -120,7 +109,6 @@ export function get_best_action(playerHand, dealerCard) {
             'Q': 'Stand',
             'K': 'Stand',
         },
-
 
         16: {
             '2': 'Stand',
@@ -154,7 +142,6 @@ export function get_best_action(playerHand, dealerCard) {
             'K': 'Hit',
         },
 
-
         14: {
             '2': 'Stand',
             '3': 'Stand',
@@ -187,7 +174,6 @@ export function get_best_action(playerHand, dealerCard) {
             'K': 'Hit',
         },
 
-
         12: {
             '2': 'Hit',
             '3': 'Hit',
@@ -203,7 +189,6 @@ export function get_best_action(playerHand, dealerCard) {
             'Q': 'Hit',
             'K': 'Hit',
         },
-
 
         11: {
             '2': 'Double Down / Hit',
@@ -316,21 +301,137 @@ export function get_best_action(playerHand, dealerCard) {
             'Q': 'Hit',
             'K': 'Hit',
         },
-
-        
-
-
-
-
-
-
-
-
-
-
     };
 
     const pair_chart = {
+
+        20: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand', 
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        18: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split', 
+            '7': 'Stand',
+            '8': 'Split',
+            '9': 'Split',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        16: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split', 
+            '7': 'Split',
+            '8': 'Split',
+            '9': 'Split',
+            '10': 'Split',
+            'A': 'Split',
+            'J': 'Split',
+            'Q': 'Split',
+            'K': 'Split'
+        },
+
+        14: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split', 
+            '7': 'Split',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        12: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split', 
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+        
+        10: {
+            '2': 'Double Down / Hit',
+            '3': 'Double Down / Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit', 
+            '7': 'Double Down / Hit',
+            '8': 'Double Down / Hit',
+            '9': 'Double Down / Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+        
+        8: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Hit',
+            '5': 'Split',
+            '6': 'Split', 
+            '7': 'Split',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        6: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split', 
+            '7': 'Split',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
 
         4: {
             '2': 'Split',
@@ -511,8 +612,6 @@ export function get_best_action(playerHand, dealerCard) {
             'Q': 'Hit',
             'K': 'Hit'
         },
-
-
     };
 
     if (playerHand.length === 2) {
