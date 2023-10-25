@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { get_best_action } from './Algorithm';
 import './Calculator.css';
 import './App.css';
 
 function Calculator() {
   const [playerHand, setPlayerHand] = useState([]);
   const [dealerCard, setDealerCard] = useState(null);
+  const [bestPlay, setBestPlay] = useState("");
 
   // Button logic here. Just swaps between if the tag is from
   // the player or dealer section of the buttons.
@@ -15,11 +17,22 @@ function Calculator() {
   // appends 'card' to the new array.
   const handleCardClick = (card, type) => {
     if (type === 'player') {
-      setPlayerHand(prevHand => [...prevHand, card]);
+        setPlayerHand(prevHand => {
+            const newHand = [...prevHand, card];
+            if (newHand.length === 2 && dealerCard) {
+                // If we have two player cards and one dealer card, calculate the best action
+                setBestPlay(get_best_action(newHand, dealerCard));
+            }
+            return newHand;
+        });
     } else if (type === 'dealer') {
-      setDealerCard(card);
+        setDealerCard(card);
+        if (playerHand.length === 2) {
+            // If we have two player cards, calculate the best action
+            setBestPlay(get_best_action(playerHand, card));
+        }
     }
-  };
+};
 
   // Clears the cards from both dealer and player containers.
   const resetHands = () => {
@@ -75,8 +88,9 @@ function Calculator() {
           </section>
 
           <section>
-            <h2>Best Play Text Goes Here</h2>
-            <div className="best-play"></div>
+            <div className="best-play-display">
+                Best Play: {bestPlay}  {/* Display the best play here */}
+            </div>
           </section>
 
 
