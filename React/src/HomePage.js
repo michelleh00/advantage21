@@ -7,7 +7,8 @@ function HomePage() {
       <nav>
         <ul>
           <li><Link to="/calculator">Play Calculator</Link></li>
-          <li><Link to="/register">Register</Link></li>
+          <li><Link to="/play">Simulator</Link></li>
+          <li><Link to="/rules">Rules</Link></li>
           <li><Link to="/contact">Contact</Link></li>
           <li><Link to="/login">Login</Link></li>
         </ul>
