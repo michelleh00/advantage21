@@ -12,6 +12,14 @@ function Login() {
 
   return (
     <div>
+        <nav className="login-nav">
+        <ul>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/calculator">Play Calculator</Link></li>
+          <li><Link to="/register">Register</Link></li>
+          <li><Link to="/contact">Contact</Link></li>
+        </ul>
+      </nav>
       <h2>Login</h2>
       <div>
         <label>Username: </label>

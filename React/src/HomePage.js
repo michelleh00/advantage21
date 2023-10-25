@@ -6,7 +6,6 @@ function HomePage() {
     <div>
       <nav>
         <ul>
-          <li><Link to="/">Home</Link></li>
           <li><Link to="/calculator">Play Calculator</Link></li>
           <li><Link to="/register">Register</Link></li>
           <li><Link to="/contact">Contact</Link></li>
