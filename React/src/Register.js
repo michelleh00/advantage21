@@ -24,24 +24,24 @@ function Register() {
   };
 
   return (
-      <div>
-        <nav className="register-nav">
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/calculator">Play Calculator</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/contact">Contact</Link>
-            </li>
-          </ul>
-        </nav>
-    <div className="register-container">
+    <div>
+      <nav className="register-nav">
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/calculator">Play Calculator</Link>
+          </li>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+          <li>
+            <Link to="/contact">Contact</Link>
+          </li>
+        </ul>
+      </nav>
+      <div className="register-container">
         <h2>Sign Up</h2>
         <div className="form-field">
           <label>Username</label>

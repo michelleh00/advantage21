@@ -27,14 +27,33 @@
 
 .form-field {
     margin-bottom: 10px;
+    position: relative;
+    color: #ffffff;
+}
+
+.form-field label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.form-field input {
+    border:none;
+    border-bottom:3px solid #ffffff;
+    width: 350px;
+    margin: 20px 0px;
+    outline: none;
+    font-size: 1rem;
+    padding: 5px 0px;  
+    background: transparent;
+    color: #ffffff;
+    font-family: 'Unica One', sans-serif;
 }
 
 .register-btn {
     margin-bottom: 50px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-    max-width: 15%;
+    width: 15%;
     align-self: center;
     color: white;
     border: none;
