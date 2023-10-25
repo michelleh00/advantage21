@@ -7,22 +7,104 @@ export function get_best_action(playerHand, dealerCard) {
 
     const is_pair = playerHand.length === 2 && playerHand[0] === playerHand[1];
 
-    let playerTotal;
-    // Check for two Aces
-    if (playerHand[0] === 'A' && playerHand[1] === 'A') {
-        playerTotal = 2;
-    } else {
-        // Calculate the player's total for other hands
-        playerTotal = playerHand.reduce((sum, card) => sum + cardTotal(card), 0);
 
-        // Adjust for Ace (if treating Ace as 11 causes total to exceed 21, treat it as 1)
-        if (playerHand.includes('A') && playerTotal > 21) {
-            playerTotal -= 10;
+    const check_aces = (hand) => {
+        let total = hand.reduce((sum, card) => sum + cardTotal(card), 0);
+        let num_aces = hand.filter(card => card === 'A').length;
+        
+        while (total > 21 && num_aces) {
+            total -= 10;
+            num_aces -= 1;
         }
+        return total;
+    };
+
+
+    const playerTotal = check_aces(playerHand);
+    console.log("Player Total:", playerTotal);
+
+    if (playerTotal > 21) {
+        return "BUST";
     }
 
+
   const basic_chart = {
-        
+    
+
+        21: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+
+
+        20: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+
+
+
+        19: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+
+
+
+
+        18: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+    
         17: {
             '2': 'Stand',
             '3': 'Stand',
@@ -433,11 +515,13 @@ export function get_best_action(playerHand, dealerCard) {
 
     };
 
-    if (is_pair) {
-        return pair_chart[playerTotal]?.[dealerCard];
-    } else if (playerHand.includes('A')) {
-        return ace_chart[playerTotal]?.[dealerCard];
-    } else {
-        return basic_chart[playerTotal]?.[dealerCard];
+    if (playerHand.length === 2) {
+        if (is_pair) {
+            return pair_chart[playerTotal]?.[dealerCard];
+        } else if (playerHand.includes('A')) {
+            return ace_chart[playerTotal]?.[dealerCard];
+        }
     }
+    
+    return basic_chart[playerTotal]?.[dealerCard];
 }
