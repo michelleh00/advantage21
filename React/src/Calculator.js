@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Calculator.css';
 import './App.css';
-import './GoogleFonts.css';
 
 function Calculator() {
   const [playerHand, setPlayerHand] = useState([]);

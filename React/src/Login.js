@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './Auth';
+import './App.css';
+import './Login.css';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -26,23 +28,22 @@ function Login() {
       </nav>
       <h2>Login</h2>
       <div>
-        <label>Username: </label>
+        <label>Username</label>
         <input 
           value={username} 
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
       <div>
-        <label>Password: </label>
+        <label>Password</label>
         <input
           value={password} 
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
       <button onClick={handleLogin}>Login</button>
-
       <div>
-        <Link to="/register">Register</Link>
+        Don't have an account? <Link to="/register">Sign up here!</Link>
       </div>
     </div>
   );

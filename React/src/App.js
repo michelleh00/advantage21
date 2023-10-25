@@ -9,6 +9,7 @@ import Rules from './Rules';
 import Play from './Play';
 import Account from './Account';
 import { AuthProvider } from './Auth';
+import './GoogleFonts.css';
 
 function App() {
   return (
