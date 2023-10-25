@@ -7,12 +7,20 @@ import "./Login.css";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    login(username, password);
-    navigate("/");
+    setError("");
+
+    const loginResult = login(username, password);
+
+    if (loginResult) {
+      navigate("/");
+    } else {
+      setError("Invalid username or password. Please try again.");
+    }
   };
 
   return (
@@ -45,6 +53,7 @@ function Login() {
         <div className="form-field">
           <label>Password</label>
           <input
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -52,6 +61,7 @@ function Login() {
         <button className="login-btn" onClick={handleLogin}>
           Login
         </button>
+        <div>{error && <p className="error">{error}</p>}</div>
         <div>
           Don't have an account? <Link to="/register">Sign up here!</Link>
         </div>

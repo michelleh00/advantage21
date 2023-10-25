@@ -4,6 +4,10 @@ import { useAuth } from "./Auth";
 import "./App.css";
 import "./Register.css";
 
+const MIN_USERNAME_LENGTH = 6;
+const MAX_USERNAME_LENGTH = 20;
+const MIN_PASSWORD_LENGTH = 8;
+
 function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -14,15 +18,39 @@ function Register() {
   const navigate = useNavigate();
 
   const handleRegister = () => {
-    if (password === confirmPassword) {
-      // Passwords match, proceed with registration
+    setError("");
+
+    if (!password || !confirmPassword) {
+      setError("Please enter a password and confirm your password.");
+    } else {
+      if (username.length < MIN_USERNAME_LENGTH) {
+        setError("Username must have at least 6 characters.");
+      }
+      if (username.length > MAX_USERNAME_LENGTH) {
+        setError("Username must have at most 20 characters.");
+      }
+      if (password.length < MIN_PASSWORD_LENGTH) {
+        setError("Password must have at least 8 characters.");
+      }
+      if (!isValidEmail(email)) {
+        setError("Please enter a valid email address.");
+      }
+      if (password !== confirmPassword) {
+        setError("Passwords do not match.");
+      }
+    }
+
+    if (!error) { 
       register(username, email, password);
       navigate("/login");
-    } else {
-      setError("Passwords do not match.");
     }
   };
 
+  const isValidEmail = (email) => {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    return emailRegex.test(email);
+  };
+  
   return (
     <div>
       <nav className="register-nav">
