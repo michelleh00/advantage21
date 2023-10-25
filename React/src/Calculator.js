@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Calculator.css';
 import './App.css';
+import './GoogleFonts.css';
 
 function Calculator() {
   const [playerHand, setPlayerHand] = useState([]);
@@ -102,17 +103,15 @@ function Calculator() {
               })}
             </div>
             <div className="hand-area-text">Player Area</div>
-
           </section>
-
         </div>
       </div>
     </div>
   );
 }
 
-          // When adding cards you the player area, we keep track of the middle of the hand,
-          // we then move the card slightly left and then rotate 10 degrees for each card added
-          // so it creates a 'splay effect' with the cards.
-          // TODO? Maybe limit the hand to a theoretical max of 11 cards.
+// When adding cards you the player area, we keep track of the middle of the hand,
+// we then move the card slightly left and then rotate 10 degrees for each card added
+// so it creates a 'splay effect' with the cards.
+// TODO? Maybe limit the hand to a theoretical max of 11 cards.
 export default Calculator;

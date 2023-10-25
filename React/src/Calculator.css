@@ -1,7 +1,13 @@
 .Calculator {
-  background-color: #18471e;
+  background-color: #35654D;
   color: rgb(202, 202, 202);
   font-size: calc(1.5em);
+  font-family: 'Unica One', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0px;
+  overflow: hidden;
 }
 
 .Calculator h1 {
@@ -10,7 +16,7 @@
 }
 
 .App-link {
-  color: #fb6161;
+  color: #CD4C4C;
 }
 
 button {
@@ -50,7 +56,7 @@ button {
 }
 
 .card-sections button:hover {
-  background-color: #e05151;
+  background-color: #CD4C4C;
 }
 
 .card-selection {
@@ -87,7 +93,7 @@ button {
   width: 140px;
   height: 200px;
   border-radius: 15px;
-  border: 10px solid rgb(196, 201, 34);
+  border: 10px solid rgb(42, 80, 61);
   margin: 20px auto;
   justify-content: center;
   align-items: center;
@@ -137,14 +143,14 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 5px solid rgb(0, 161, 3);
+  border: 5px solid rgb(255, 255, 255);
   padding: 10px;
   border-radius: 10px;
   width: 30%;
   height: 220px;
   margin: 0px auto;
   position: relative;
-  background-color: #12540055;
+  background-color: #35654D;
 }
 
 .player-hand-container {
@@ -159,5 +165,5 @@ button {
 
 .reset-button {
   width: 250px; 
-  margin: 0px 45px;
+  margin: 20px 45px;
 }
