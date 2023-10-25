@@ -19,20 +19,21 @@ function Calculator() {
     if (type === 'player') {
         setPlayerHand(prevHand => {
             const newHand = [...prevHand, card];
-            if (newHand.length === 2 && dealerCard) {
-                // If we have two player cards and one dealer card, calculate the best action
+            if (newHand.length >= 2 && dealerCard) {
+                // If we have at least two player cards and one dealer card, calculate the best action
                 setBestPlay(get_best_action(newHand, dealerCard));
             }
             return newHand;
         });
     } else if (type === 'dealer') {
         setDealerCard(card);
-        if (playerHand.length === 2) {
-            // If we have two player cards, calculate the best action
+        if (playerHand.length >= 2) {
+            // If we have at least two player cards, calculate the best action
             setBestPlay(get_best_action(playerHand, card));
         }
     }
 };
+
 
   // Clears the cards from both dealer and player containers.
   const resetHands = () => {

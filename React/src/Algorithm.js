@@ -6,13 +6,20 @@ export function get_best_action(playerHand, dealerCard) {
     };
 
     const is_pair = playerHand.length === 2 && playerHand[0] === playerHand[1];
-    
-    const playerTotal = playerHand.reduce((sum, card) => sum + cardTotal(card), 0);
 
-    if (playerHand.includes('A') && playerTotal > 21) {
-        playerTotal -= 10;
+    let playerTotal;
+    // Check for two Aces
+    if (playerHand[0] === 'A' && playerHand[1] === 'A') {
+        playerTotal = 2;
+    } else {
+        // Calculate the player's total for other hands
+        playerTotal = playerHand.reduce((sum, card) => sum + cardTotal(card), 0);
+
+        // Adjust for Ace (if treating Ace as 11 causes total to exceed 21, treat it as 1)
+        if (playerHand.includes('A') && playerTotal > 21) {
+            playerTotal -= 10;
+        }
     }
-
 
   const basic_chart = {
         
@@ -241,7 +248,6 @@ export function get_best_action(playerHand, dealerCard) {
 
     };
 
-
     const pair_chart = {
 
         4: {
@@ -425,7 +431,7 @@ export function get_best_action(playerHand, dealerCard) {
         },
 
 
-    }
+    };
 
     if (is_pair) {
         return pair_chart[playerTotal]?.[dealerCard];
