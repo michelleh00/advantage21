@@ -622,6 +622,10 @@ export function get_best_action(playerHand, dealerCard) {
     // Here we are checking which chart to reference, with our edge case being Aces.
     if (playerHand.length === 2) {
         if (is_pair) {
+            if (playerHand.includes('A')) {
+                let newPlayerTotal = 2;
+                return pair_chart[newPlayerTotal]?.[dealerCard];
+            }
             return pair_chart[playerTotal]?.[dealerCard];
         } else if (playerHand.includes('A')) {
             return ace_chart[playerTotal]?.[dealerCard];
