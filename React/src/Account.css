@@ -1,0 +1,57 @@
+.acct-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    align-items: flex-start; 
+    position: relative;
+}
+
+.left-options {
+    text-align: left;
+    margin-left: 75px;
+    margin-top: 0px;
+    font-size: 30px;
+  }
+
+  .left-toggles{
+    position: absolute;
+    margin-left: 450px;
+    margin-top: 0px;
+    font-size: 30px;
+  }
+
+  .percentages{
+    text-align: left;
+    margin-left: 75px;
+    margin-top: 30px;
+    font-size: 30px;
+  }
+  
+  .right-options{
+    position: absolute;
+    margin-left: 1000px;
+    margin-top: 10px;
+    font-size: 30px;
+  }
+
+  .right-toggles{
+    position: absolute;
+    margin-left: 1200px;
+    margin-top: 0px;
+    font-size: 30px;
+  }
+
+  .streaks{
+    position: absolute;
+    margin-left: 1000px;
+    margin-top: 250px;
+    font-size: 30px;
+  }
+  
+.acct-image {
+    width: 10%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
