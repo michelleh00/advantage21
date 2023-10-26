@@ -1,0 +1,24 @@
+p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-top: 10px;
+    color: rgb(202, 202, 202);;
+}
+
+.card-values {
+    font-weight: bold;
+    text-align: left;
+    margin-left: 20%;
+}
+
+.game-play {
+    font-weight: bold;
+    text-align: left;
+    margin-left: 20%;
+}
+
+.winning-payouts {
+    font-weight: bold;
+    text-align: left;
+    margin-left: 20%;
+}
