@@ -39,6 +39,7 @@ function Calculator() {
   const resetHands = () => {
     setPlayerHand([]);
     setDealerCard(null);
+    setBestPlay("");
   };
 
   return (
