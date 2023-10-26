@@ -90,10 +90,10 @@ function Calculator() {
           </section>
 
           <section>
-            <div className="best-play-display">
-                Best Play: {bestPlay}
-            </div>
-          </section>
+  <div className="best-play-display">
+      Best Play: <span className="best-play-action">{bestPlay}</span> 
+  </div>
+</section>
 
 
           <section className="player-hand-section">

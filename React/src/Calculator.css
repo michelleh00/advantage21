@@ -36,6 +36,15 @@ button {
   line-height: normal;
 }
 
+.best-play-display {
+  margin-bottom: 20px;
+}
+
+.best-play-action {
+  color: yellow;
+  font-weight: bold;
+}
+
 .card-image {
   max-width: 100%;
   max-height: 100%;
