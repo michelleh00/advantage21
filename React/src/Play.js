@@ -127,13 +127,14 @@ if (dealerPoints > 21) {
                         <button className='play-reset-button' onClick={resetGame}>Reset Game</button>
                     )}
                 </div>
-    
+
                 <section className="play-player-card-section">
                     <h2>Player Hand</h2>
                     {playerHand.map((card, index) => (
                         <img src={`/resources/${card}.png`} className="play-card-image" key={index} />
                     ))}
                 </section>
+                <center>Hand Value: {calculateHandValue(playerHand)}</center>
             </div>
         </div>
     );
