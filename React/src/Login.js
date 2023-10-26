@@ -32,7 +32,7 @@ function Login() {
             <Link to="/calculator">Play Calculator</Link>
           </li>
           <li>
-            <Link to="/register">Register</Link>
+            <Link to="/rules">Rules</Link>
           </li>
           <li>
             <Link to="/contact">Contact</Link>
