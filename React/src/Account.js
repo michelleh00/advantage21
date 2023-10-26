@@ -12,13 +12,6 @@ function Account() {
             <li><Link to="/play">Simulator</Link></li>
             <li><Link to="/rules">Rules</Link></li>
             <li><Link to="/contact">Contact</Link></li>
-            {isAuthenticated ? (
-                        <><li><Link to="/account">Account</Link></li>
-                        <li onClick={logout}>Logout</li></>) 
-                        :
-                        (<><li><Link to="/login">Login</Link></li>
-                        <li><Link to="/register">Register</Link></li></>
-                    )}
         </ul>
       </nav>
             <h1>Account Page</h1>
