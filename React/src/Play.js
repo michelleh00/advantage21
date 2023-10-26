@@ -114,7 +114,7 @@ if (dealerPoints > 21) {
                         <img src={`/resources/${card}.png`} alt={`${card} card`} className="play-card-image" key={index} />
                     ))}
                 </section>
-    
+                <center>Hand Value: {calculateHandValue(dealerHand)}</center>
                 <div className="play-middle-display">
                     {gameState === "Deal Cards to Start" ? (
                         <button className= "play-button" onClick={dealCards}>Deal Cards</button>
