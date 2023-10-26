@@ -90,7 +90,7 @@ function Calculator() {
 
           <section>
             <div className="best-play-display">
-                Best Play: {bestPlay}  {/* Display the best play here */}
+                Best Play: {bestPlay}
             </div>
           </section>
 

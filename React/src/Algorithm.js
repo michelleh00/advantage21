@@ -5,8 +5,7 @@ export function get_best_action(playerHand, dealerCard) {
         return parseInt(card);
     };
 
-    const is_pair = playerHand.length === 2 && playerHand[0] === playerHand[1];
-
+    let is_pair = playerHand.length === 2 && playerHand[0] === playerHand[1];
 
     const check_aces = (hand) => {
         let total = hand.reduce((sum, card) => sum + cardTotal(card), 0);
