@@ -55,3 +55,9 @@
     flex-direction: column;
     margin: auto;
 }
+
+.dark-mode {
+  background-color: #213C33;
+  color: #CCCCCC;
+}
+
