@@ -1,0 +1,83 @@
+.Play {
+    background-color: #35654D;
+    color: rgb(202, 202, 202);
+    font-size: calc(1.5em);
+    min-height: 100vh;
+    display: flex;
+
+    flex-direction: column;
+    margin: 0px;
+    overflow: hidden;
+  }
+  
+  .Play h1, .Play h2 {
+    margin-top: 0;
+    padding: 0px;
+  }
+
+  .play-button {
+    padding: 15px 10px;
+    margin: 20px 10px;
+    background-color: #6d6d6d;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+
+    transition: background-color 0.3s;
+    font-size: 1.2em;
+    text-align: center;
+    display: flex;
+
+
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+  }
+  
+  .play-button:hover {
+    background-color: #CD4C4C;
+  }
+  
+
+  
+  
+  .play-card-image {
+
+    width: 190px;
+    min-width: 100px;
+    max-width: 10%;
+
+    display: block;
+    margin: 10px;
+    z-index: 2;
+  }
+  
+
+  
+  .play-middle-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 20vh;
+  }
+  
+  .play-reset-button {
+    width: 250px;
+    margin: 20px 45px;
+  }
+
+  .play-dealer-card-section, .play-player-card-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+
+    width: 100%;
+  }
+  
+  .play-card-sections {
+    flex-direction: column;
+    align-items: center;
+  }
+  
