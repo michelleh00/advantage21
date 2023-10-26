@@ -16,6 +16,7 @@ function Register() {
   const [error, setError] = useState("");
   const { register } = useAuth();
   const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuth();
 
   const handleRegister = () => {
     setError("");
@@ -40,7 +41,7 @@ function Register() {
       }
     }
 
-    if (!error) { 
+    if (!error) {
       register(username, email, password);
       navigate("/login");
     }
@@ -50,7 +51,7 @@ function Register() {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
     return emailRegex.test(email);
   };
-  
+
   return (
     <div>
       <nav className="register-nav">
@@ -62,11 +63,28 @@ function Register() {
             <Link to="/calculator">Play Calculator</Link>
           </li>
           <li>
-            <Link to="/login">Login</Link>
+            <Link to="/rules">Rules</Link>
           </li>
           <li>
             <Link to="/contact">Contact</Link>
           </li>
+          {isAuthenticated ? (
+            <>
+              <li>
+                <Link to="/account">Account</Link>
+              </li>
+              <li onClick={logout}>Logout</li>
+            </>
+          ) : (
+            <>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/register">Register</Link>
+              </li>
+            </>
+          )}
         </ul>
       </nav>
       <div className="register-container">

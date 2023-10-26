@@ -10,10 +10,11 @@ function Login() {
   const [error, setError] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuth();
 
   const handleLogin = () => {
     setError("");
-    
+
     if (!error) {
       login(username, password);
       navigate("/account");
@@ -36,6 +37,23 @@ function Login() {
           <li>
             <Link to="/contact">Contact</Link>
           </li>
+          {isAuthenticated ? (
+            <>
+              <li>
+                <Link to="/account">Account</Link>
+              </li>
+              <li onClick={logout}>Logout</li>
+            </>
+          ) : (
+            <>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/register">Register</Link>
+              </li>
+            </>
+          )}
         </ul>
       </nav>
       <div className="login-container">

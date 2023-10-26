@@ -57,7 +57,7 @@ button:hover {
   background-color: #555;
 }
 
-.calculator-nav, .login-nav {
+.calculator-nav {
   background-color: #444;
   height: 60px;
   display: flex;
@@ -66,18 +66,18 @@ button:hover {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.calculator-nav ul, .login-nav ul {
+.calculator-nav ul {
   list-style-type: none;
   padding: 0;
   display: flex;
   gap: 20px;
 }
 
-.calculator-nav li, .login-nav li {
+.calculator-nav li {
   margin: 0;
 }
 
-.calculator-nav a, .login-nav a {
+.calculator-nav a {
   text-decoration: none;
   color: white;
   padding: 10px 20px;
@@ -85,7 +85,7 @@ button:hover {
   border-radius: 5px;
 }
 
-.calculator-nav a:hover, .login-nav a:hover {
+.calculator-nav a:hover {
   background-color: rgba(255, 255, 255, 0.1);
   color: #e05151;
 }
