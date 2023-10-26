@@ -13,31 +13,38 @@ export const useAuth = () => {
 // guest creds as we are sort of doing now.
 
 export const AuthProvider = ({ children }) => {
+    // This sets the isAuthenticated state, so we can have a 'local' account
+    // logged in that we can track.
     const [isAuthenticated, setIsAuthenticated] = useState(
         localStorage.getItem('isAuthenticated') === 'true'
     );
-
+    
+    // What we are tracking with the user, in this case we are tracking username and password.
     const [userDetails, setUserDetails] = useState({
         username: localStorage.getItem('username') || '',
         password: localStorage.getItem('password') || '',
     });
 
+    // whenever a state changes with the user this acts as a hook to update our localstorage
     useEffect(() => {
         localStorage.setItem('isAuthenticated', isAuthenticated);
         localStorage.setItem('username', userDetails.username);
         localStorage.setItem('password', userDetails.password);
     }, [isAuthenticated, userDetails]);
 
+    // Passes a username and password and sets the status as 'logged in'
     const login = (username, password) => {
         setIsAuthenticated(true);
         setUserDetails({ username, password });
     };
 
+    // Clears the temporary username and password and then sets the logged in status to false.
     const logout = () => {
         setIsAuthenticated(false);
         setUserDetails({ username: '', password: '' });
     };
 
+    // Sends to the provider, which updates the state in all other applicaple locations.
     return (
         <Auth.Provider value={{ isAuthenticated, login, logout, userDetails }}>
             {children}
