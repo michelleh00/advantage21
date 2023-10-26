@@ -13,13 +13,10 @@ function Login() {
 
   const handleLogin = () => {
     setError("");
-
-    const loginResult = login(username, password);
-
-    if (loginResult) {
-      navigate("/");
-    } else {
-      setError("Invalid username or password. Please try again.");
+    
+    if (!error) {
+      login(username, password);
+      navigate("/account");
     }
   };
 
@@ -53,8 +50,8 @@ function Login() {
         <div className="form-field">
           <label>Password</label>
           <input
-            type="password"
             value={password}
+            type="password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
