@@ -45,7 +45,7 @@ function Play() {
 
     const dealCards = () => {
         const playerCards = [cardValues[Math.floor(Math.random() * 13)], cardValues[Math.floor(Math.random() * 13)]];
-        const dealerCards = [cardValues[Math.floor(Math.random() * 13)], cardValues[Math.floor(Math.random() * 13)]];
+        const dealerCards = [cardValues[Math.floor(Math.random() * 13)]];
         setPlayerHand(playerCards);
         setDealerHand(dealerCards);
         setGameStatus("Player's Turn");
