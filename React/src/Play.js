@@ -67,15 +67,24 @@ function Play() {
     };
 
     const dealerTurn = () => {
-        let dealerPoints = calculateHandValue(dealerHand);
+
+        // Dont change this, we need to use a push() instead of a spreader function here.
+        // For some reason I was getting an infinte loop where the dealer would have to just
+        // keep drawing cards if the number of cards exceeded two and it would never stop
+        // drawing. 
+        let currentDealerHand = [...dealerHand];
+        let dealerPoints = calculateHandValue(currentDealerHand);
+
         while (dealerPoints < 17) {
             const newCard = cardValues[Math.floor(Math.random() * 13)];
-            const newHand = [...dealerHand, newCard];
-            setDealerHand(newHand);
-            dealerPoints = calculateHandValue(newHand);
+            currentDealerHand.push(newCard);
+            dealerPoints = calculateHandValue(currentDealerHand);
         }
-
-        if (dealerPoints > 21) {
+        
+        // Updates the dealer hand on screen.
+        setDealerHand(currentDealerHand);
+    
+if (dealerPoints > 21) {
             setGameStatus("Dealer Busted! Player Wins!");
         } else if (dealerPoints === calculateHandValue(playerHand)) {
             setGameStatus("Push!");
@@ -87,7 +96,7 @@ function Play() {
             setGameStatus("Player Wins!");
         }
     };
-
+    
     const resetGame = () => {
         setPlayerHand([]);
         setDealerHand([]);
