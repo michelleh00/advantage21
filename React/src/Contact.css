@@ -1,0 +1,12 @@
+.contact-sections {
+    display: flex;
+    justify-content: space-between;
+}
+
+.contact-section {
+    flex-basis: 48%; 
+}
+
+.contact-section p {
+    text-align: center;
+}
