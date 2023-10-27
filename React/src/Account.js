@@ -4,18 +4,20 @@ import { useAuth } from './Auth';
 import Switch from "./Switch";
 import "./Account.css";
 
+// The user's profile is displayed here. We check first if user is logged in
+// and display the appropriate nav options accordingly.
+// Switches are used to apply app variations.
 
 function Account() {
     const { isAuthenticated, logout } = useAuth();
     const { userDetails } = useAuth();
-
 
     const [darkMode, setDarkMode] = useState(false);
     const [soft17, setSoft17] = useState(false);
     const [surrender, setSurrender] = useState(false);
     const [handTimer, setHandTimer] = useState(false);
 
-
+    // Apply appropriate css depending on whether or not dark mode toggle is engaged
     useEffect(() => {
         if (darkMode) {
             document.body.classList.add('dark-mode');
