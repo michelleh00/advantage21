@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from './Auth';
 import './Play.css';
 
 
@@ -17,6 +19,10 @@ import './Play.css';
 const cardValues = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
 
 function Play() {
+
+    const { isAuthenticated, logout } = useAuth();
+    const { userDetails } = useAuth();
+
     const [playerHand, setPlayerHand] = useState([]);
     const [dealerHand, setDealerHand] = useState([]);
     const [gameState, setGameStatus] = useState("Deal Cards to Start");
@@ -103,6 +109,23 @@ if (dealerPoints > 21) {
         setGameStatus("Deal Cards to Start");
     };
     return (
+        <div>
+        <nav>
+            <ul>
+                <li><Link to="/calculator">Play Calculator</Link></li>
+                <li><Link to="/play">Simulator</Link></li>
+                <li><Link to="/rules">Rules</Link></li>
+                <li><Link to="/contact">Contact</Link></li>
+                {isAuthenticated ? (
+                    <><li><Link to="/account">Account</Link></li>
+                        <li onClick={logout}>Logout</li></>)
+                    :
+                    (<><li><Link to="/login">Login</Link></li>
+                        <li><Link to="/register">Register</Link></li></>)
+                }
+            </ul>
+        </nav>
+    
         <div className="Play">
             <h1>Blackjack Simulator</h1>
             <h2>{gameState}</h2>
@@ -136,6 +159,7 @@ if (dealerPoints > 21) {
                 </section>
                 <center>Hand Value: {calculateHandValue(playerHand)}</center>
             </div>
+        </div>
         </div>
     );
                     }
