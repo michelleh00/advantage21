@@ -1,0 +1,13 @@
+.CalcChip {
+    width: 10px; /* Adjust the width as needed to make the image smaller */
+    height: 50px; /* To maintain the aspect ratio while reducing the width */
+    float: inline-start; /* Align the image to the left */
+    margin-left: 250px; /* Add some margin to separate the image from other content */
+  }
+
+  .PlayChip {
+    width: 10px; /* Adjust the width as needed to make the image smaller */
+    height: 50px; /* To maintain the aspect ratio while reducing the width */
+    float: inline-end; /* Align the image to the left */
+    margin-right: 700px; /* Add some margin to separate the image from other content */
+  }
