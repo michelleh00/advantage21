@@ -114,49 +114,45 @@ function Play({ timerDuration }) {
       const newCard = cardValues[Math.floor(Math.random() * 13)];
       const newHand = [...playerHand, newCard];
       setPlayerHand(newHand);
-
-      bestMove = get_best_action(newHand, dealerHand[0], deckNum, surrender, soft17);
-      setBestMove(bestMove);
-
-      console.log('Best Move:', bestMove);
-     
+  
       if (calculateHandValue(newHand) > 21) {
         setGameStatus("Player Busted! Dealer Wins!");
       }
-
-
-      // determine optimal move from alrogithm
-
-
-
-      if (bestMove == 'Hit') {
-        console.log("player made correct hit");
+  
+      // determine optimal move from the algorithm
+      bestMove = get_best_action(newHand, dealerHand[0], deckNum, surrender, soft17);
+      setBestMove(bestMove);
+  
+      if (bestMove === 'Hit' || bestMove === 'Double Down' || bestMove === 'Surrender') {
+        console.log("player made correct move");
         setCorrectMoves(correctMoves + 1); // increment streak counter (correctMoves)
-      } else { //this may be the culprit
-        console.log("player made incorrect hit");
+      } else {
+        console.log("player made incorrect move");
         setCorrectMoves(0); // reset streak counter (correctMoves) to 0
       }
-
-
+  
       setTimer(10); // Reset the timer
     }
-  };
+  }
 
-
+  
   const playerStand = () => {
     if (!isTimeUp) {
-      setGameStatus("Dealer's Turn");
-      dealerTurn();
-    }
-   
-   
-    if (bestMove == 'Stand') {
-      console.log("player made correct stand");
-      setCorrectMoves(correctMoves + 1); // increment streak counter (correctMoves)
-    } else {
-        console.log("player made incorrect stand");
+      // determine optimal move from the algorithm
+      bestMove = get_best_action(playerHand, dealerHand[0], deckNum, surrender, soft17);
+      setBestMove(bestMove);
+  
+      if (bestMove === 'Stand' || bestMove === 'Double Down' || bestMove === 'Surrender') {
+        console.log("player made correct move");
+        setCorrectMoves(correctMoves + 1); // increment streak counter (correctMoves)
+      } else {
+        console.log("player made incorrect move");
         setCorrectMoves(0); // reset streak counter (correctMoves) to 0
       }
+    }
+  
+    setGameStatus("Dealer's Turn");
+    dealerTurn();
   };
 
 
