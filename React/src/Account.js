@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect} from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './Auth';
 import Switch from "./Switch";
 import "./Account.css";
@@ -9,6 +9,7 @@ import "./Account.css";
 // Switches are used to apply app variations.
 
 function Account() {
+    const navigate = useNavigate();
     const { isAuthenticated, logout } = useAuth();
     const { userDetails } = useAuth();
 
@@ -17,6 +18,12 @@ function Account() {
     const [surrender, setSurrender] = useState(false);
     const [handTimer, setHandTimer] = useState(false);
 
+    const handleLogout = () => {
+        logout();
+        // Redirect to the login page after logout
+        navigate('/login');
+    };
+    
     // Apply appropriate css depending on whether or not dark mode toggle is engaged
     useEffect(() => {
         if (darkMode) {
@@ -37,7 +44,7 @@ function Account() {
                     <li><Link to="/contact">Contact</Link></li>
                     {isAuthenticated ? (
                         <><li><Link to="/account">Account</Link></li>
-                            <li onClick={logout}>Logout</li></>)
+                            <li onClick={handleLogout}>Logout</li></>)
                         :
                         (<><li><Link to="/login">Login</Link></li>
                             <li><Link to="/register">Register</Link></li></>)

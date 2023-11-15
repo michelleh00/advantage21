@@ -17,6 +17,7 @@ function Register() {
   const { register } = useAuth();
   const navigate = useNavigate();
   const { isAuthenticated, logout } = useAuth();
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleRegister = () => {
     setError("");
@@ -43,7 +44,13 @@ function Register() {
 
     if (!error) {
       register(username, email, password);
-      navigate("/login");
+      setSuccessMessage("Account successfully registered!");
+
+      // clears the input fields after user registers successfully
+      setUsername("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
     }
   };
 
@@ -119,7 +126,10 @@ function Register() {
         <button className="register-btn" onClick={handleRegister}>
           Sign Up
         </button>
-        <div>{error && <p className="error">{error}</p>}</div>
+        <div>
+          {successMessage && <p className="success">{successMessage}</p>}
+          {error && <p className="error">{error}</p>}
+        </div>
         <div>
           Already have an account? <Link to="/login">Login here!</Link>
         </div>
