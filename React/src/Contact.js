@@ -2,8 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "./Auth";
 import "./Contact.css";
+import { useSettings } from "./Settings";
 
 function Contact() {
+    const { settings } = useSettings();
+    console.log("Contact - Current settings:", settings);
     const { isAuthenticated, logout } = useAuth();
     return (
         <div>
