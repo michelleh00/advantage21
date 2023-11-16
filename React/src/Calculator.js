@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { get_best_action } from './Algorithm';
+import { SettingsProvider } from './Settings';
+import { useSettings } from './Settings';
 import './Calculator.css';
 import './App.css';
 
@@ -9,6 +11,9 @@ function Calculator() {
   const [dealerCard, setDealerCard] = useState(null);
   const [bestPlay, setBestPlay] = useState("");
 
+
+
+  const { settings, setSettings } = useSettings();
   // Button logic here. Just swaps between if the tag is from
   // the player or dealer section of the buttons.
   // React uses a 'useState' function, it takes two elements, the value and the
@@ -53,6 +58,9 @@ function Calculator() {
       <div className="Calculator">
 
         <h1>Optimal Play Calculator</h1>
+        <div>
+          Surrender: {settings.surrender ? 'True' : 'False'}
+        </div>
 
         <div className="card-sections">
           <section className="dealer-card-section">
