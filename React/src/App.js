@@ -10,10 +10,12 @@ import Play from './Play';
 import Account from './Account';
 import { AuthProvider } from './Auth';
 import './GoogleFonts.css';
+import { TimerProvider } from './TimerContext';
 
 function App() {
   return (
     <AuthProvider>
+      <TimerProvider>
       <Router>
         <div>
           <Routes>
@@ -28,6 +30,7 @@ function App() {
           </Routes>
         </div>
       </Router>
+      </TimerProvider>
     </AuthProvider>
   );
 }

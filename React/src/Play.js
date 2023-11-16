@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from './Auth';
+import { useTimer } from './TimerContext';
 import './Play.css';
 
 
@@ -20,12 +21,32 @@ const cardValues = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K',
 
 function Play() {
 
+
     const { isAuthenticated, logout } = useAuth();
     const { userDetails } = useAuth();
+    const { timerEnabled: contextTimerEnabled } = useTimer();
 
     const [playerHand, setPlayerHand] = useState([]);
     const [dealerHand, setDealerHand] = useState([]);
     const [gameState, setGameStatus] = useState("Deal Cards to Start");
+    const [timeUp, setTimeUp] = useState(false);
+    const { timerEnabled, timerDuration } = useTimer();
+
+    useEffect(() => {
+        let timer;
+      
+        const handleTimeout = () => {
+          setTimeUp(true);
+        };
+      
+        if (timerEnabled && contextTimerEnabled) {
+          timer = setTimeout(handleTimeout, timerDuration * 1000);
+        }
+      
+        return () => {
+          clearTimeout(timer);
+        };
+      }, [timerEnabled, timerDuration, contextTimerEnabled]);
 
     const calculateHandValue = (hand) => {
         let value = 0;
@@ -55,6 +76,7 @@ function Play() {
         setPlayerHand(playerCards);
         setDealerHand(dealerCards);
         setGameStatus("Player's Turn");
+        setTimeUp(false);
     };
 
     const playerHit = () => {
@@ -107,6 +129,7 @@ if (dealerPoints > 21) {
         setPlayerHand([]);
         setDealerHand([]);
         setGameStatus("Deal Cards to Start");
+        setTimeUp(false);
     };
     return (
         <div>
@@ -145,6 +168,19 @@ if (dealerPoints > 21) {
                         <>
                             <button className='play-button' onClick={playerHit}>Hit</button>
                             <button className='play-button' onClick={playerStand}>Stand</button>
+                            {timerEnabled && !timeUp && (
+                  <div>
+                    Timer: {timerDuration} seconds remaining
+                  </div>
+                )}
+                {timeUp && (
+                  <div>
+                    Time's Up! Click to deal again.
+                    <button className="play-reset-button" onClick={resetGame}>
+                      Deal Again
+                    </button>
+                  </div>
+                )}
                         </>
                     ) : (
                         <button className='play-reset-button' onClick={resetGame}>Reset Game</button>
