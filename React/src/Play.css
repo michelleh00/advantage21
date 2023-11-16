@@ -1,4 +1,4 @@
-.Play {
+/* .Play {
     background-color: #35654D;
     color: rgb(202, 202, 202);
     font-size: calc(1.5em);
@@ -8,7 +8,7 @@
     flex-direction: column;
     margin: 0px;
     overflow: hidden;
-  }
+  } */
   
   .Play h1, .Play h2 {
     margin-top: 0;

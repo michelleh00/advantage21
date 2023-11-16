@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { get_best_action } from './Algorithm';
 import { SettingsProvider } from './Settings';
 import { useSettings } from './Settings';
+import { useAuth } from './Auth';
 import './Calculator.css';
 import './App.css';
 
@@ -10,6 +11,7 @@ function Calculator() {
   const [playerHand, setPlayerHand] = useState([]);
   const [dealerCard, setDealerCard] = useState(null);
   const [bestPlay, setBestPlay] = useState("");
+  const { isAuthenticated, logout } = useAuth();
 
 
 
@@ -49,9 +51,23 @@ function Calculator() {
 
   return (
     <div>
-      <nav className="calculator-nav">
+      <nav>
         <ul>
-          <li><Link to="/">Back to Home</Link></li>
+          <li><Link to="/calculator">Play Calculator</Link></li>
+          <li><Link to="/play">Simulator</Link></li>
+          <li><Link to="/rules">Rules</Link></li>
+          <li><Link to="/contact">Contact</Link></li>
+          {isAuthenticated ? (
+            <>
+              <li><Link to="/account">Account</Link></li>
+              <li onClick={logout}>Logout</li>
+            </>
+          ) : (
+            <>
+              <li><Link to="/login">Login</Link></li>
+              <li><Link to="/register">Register</Link></li>
+            </>
+          )}
         </ul>
       </nav>
 
