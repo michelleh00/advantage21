@@ -2,7 +2,7 @@ export function get_best_action(playerHand, dealerCard) {
     
     
     const extractCardValue = card => card.split('-')[0];
-
+    const containsAce = playerHand.some(card => extractCardValue(card) === 'A');
     const cardTotal = card => {
         let value = extractCardValue(card); // Extract card value
         if (['J', 'Q', 'K'].includes(value)) return 10;
@@ -13,7 +13,7 @@ export function get_best_action(playerHand, dealerCard) {
     // This just checks the initial cards dealt and checks to see if they are the same.
     // If they are the same they will have different logic applied since you are able to split.
     let is_pair = playerHand.length === 2 && extractCardValue(playerHand[0]) === extractCardValue(playerHand[1]);
-
+    let is_pair_of_aces = is_pair && containsAce;
     // This is very messy but is working for now.
     // So this counts all the Aces in the hand, if our hand total is over 21
     // we subtract 10 points until we are below 21. This should keep our total for instance
@@ -529,10 +529,10 @@ export function get_best_action(playerHand, dealerCard) {
 
         18: {
             '2': 'Stand',
-            '3': 'Double',
-            '4': 'Double',
-            '5': 'Double',
-            '6': 'Double', 
+            '3': 'Double-Down / Hit',
+            '4': 'Double-Down / Hit',
+            '5': 'Double-Down / Hit',
+            '6': 'Double-Down / Hit', 
             '7': 'Stand',
             '8': 'Stand',
             '9': 'Hit',
@@ -545,10 +545,10 @@ export function get_best_action(playerHand, dealerCard) {
 
         17: {
             '2': 'Hit',
-            '3': 'Double',
-            '4': 'Double',
-            '5': 'Double',
-            '6': 'Double', 
+            '3': 'Double-Down / Hit',
+            '4': 'Double-Down / Hit',
+            '5': 'Double-Down / Hit',
+            '6': 'Double-Down / Hit', 
             '7': 'Hit',
             '8': 'Hit',
             '9': 'Hit',
@@ -625,17 +625,20 @@ export function get_best_action(playerHand, dealerCard) {
     };
 
     // Here we are checking which chart to reference, with our edge case being Aces.
-    if (playerHand.length === 2) {
-        if (is_pair) {
-            if (playerHand.includes('A')) {
-                let newPlayerTotal = 2;
-                return pair_chart[newPlayerTotal]?.[dealerCard];
-            }
-            return pair_chart[playerTotal]?.[dealerCard];
-        } else if (playerHand.includes('A')) {
-            return ace_chart[playerTotal]?.[dealerCard];
+    if (is_pair) {
+        // Special handling for a pair of Aces
+        if (is_pair_of_aces) {
+            return pair_chart[12]?.[extractCardValue(dealerCard)]; // or use 2 if your logic treats pair of Aces as '2'
         }
+        return pair_chart[playerTotal]?.[extractCardValue(dealerCard)];
     }
-    
+
+    // Use the ace chart if there's an Ace in a non-pair hand
+    if (containsAce && playerHand.length === 2) {
+        return ace_chart[playerTotal]?.[extractCardValue(dealerCard)];
+    }
+
+    // Default to basic chart
     return basic_chart[playerTotal]?.[extractCardValue(dealerCard)];
 }
+    
