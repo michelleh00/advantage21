@@ -22,24 +22,28 @@ function Calculator() {
   // function to be applied to update the value. Here we are using a spread operator
   // [...prevHand, card] that bascially copies the previous array (prevHand) and then
   // appends 'card' to the new array.
-  const handleCardClick = (card, type) => {
+
+  const handleCardClick = (cardValue, type) => {
+    const suits = ['C', 'H', 'D', 'S']; // Clubs, Hearts, Diamonds, Spades
+    const randomSuit = suits[Math.floor(Math.random() * suits.length)]; // Randomly select a suit
+    const card = `${cardValue}-${randomSuit}`; // Combine card value with the random suit
+
     if (type === 'player') {
-        setPlayerHand(prevHand => {
-            const newHand = [...prevHand, card];
-            if (newHand.length >= 2 && dealerCard) {
-                // If we have at least two player cards and one dealer card, calculate the best action
-                setBestPlay(get_best_action(newHand, dealerCard));
-            }
-            return newHand;
-        });
-    } else if (type === 'dealer') {
-        setDealerCard(card);
-        if (playerHand.length >= 2) {
-            // If we have at least two player cards, calculate the best action
-            setBestPlay(get_best_action(playerHand, card));
+      setPlayerHand(prevHand => {
+        const newHand = [...prevHand, card];
+        if (newHand.length >= 2 && dealerCard) {
+          setBestPlay(get_best_action(newHand, dealerCard));
         }
+        return newHand;
+      });
+    } else if (type === 'dealer') {
+      setDealerCard(card);
+      if (playerHand.length >= 2) {
+        setBestPlay(get_best_action(playerHand, card));
+      }
     }
-};
+  };
+
 
 
   // Clears the cards from both dealer and player containers.
@@ -108,16 +112,16 @@ function Calculator() {
 
           <section>
             <div className="dealer-display">
-              {dealerCard && <img src={`/resources/${dealerCard}.png`} alt={`${dealerCard} card`} className="card-image" />}
+              {dealerCard && <img src={`/resources/cards/${dealerCard}.png`} alt={`${dealerCard} card`} className="card-image" />}
               <div className="dealer-text">Dealer</div>
             </div>
           </section>
 
           <section>
-  <div className="best-play-display">
-      Best Play: <span className="best-play-action">{bestPlay}</span> 
-  </div>
-</section>
+            <div className="best-play-display">
+              Best Play: <span className="best-play-action">{bestPlay}</span>
+            </div>
+          </section>
 
 
           <section className="player-hand-section">
@@ -130,7 +134,7 @@ function Calculator() {
 
                 return (
                   <img
-                    src={`/resources/${card}.png`}
+                    src={`/resources/cards/${card}.png`}
                     alt={`${card} card`}
                     className="card-in-hand"
                     key={index}
@@ -149,8 +153,14 @@ function Calculator() {
   );
 }
 
+
 // When adding cards you the player area, we keep track of the middle of the hand,
 // we then move the card slightly left and then rotate 10 degrees for each card added
 // so it creates a 'splay effect' with the cards.
 // TODO? Maybe limit the hand to a theoretical max of 11 cards.
 export default Calculator;
+
+
+
+
+

@@ -19,8 +19,6 @@ const cardValues = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K',
 
 function Play({ timerDuration }) {
   const { isAuthenticated, logout } = useAuth();
-  const { userDetails } = useAuth();
-
   const [playerHand, setPlayerHand] = useState([]);
   const [dealerHand, setDealerHand] = useState([]);
   const [gameState, setGameStatus] = useState("Deal Cards to Start");

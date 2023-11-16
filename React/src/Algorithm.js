@@ -1,13 +1,18 @@
 export function get_best_action(playerHand, dealerCard) {
+    
+    
+    const extractCardValue = card => card.split('-')[0];
+
     const cardTotal = card => {
-        if (['J', 'Q', 'K'].includes(card)) return 10;
-        if (card === 'A') return 11; 
-        return parseInt(card);
+        let value = extractCardValue(card); // Extract card value
+        if (['J', 'Q', 'K'].includes(value)) return 10;
+        if (value === 'A') return 11; 
+        return parseInt(value);
     };
 
     // This just checks the initial cards dealt and checks to see if they are the same.
     // If they are the same they will have different logic applied since you are able to split.
-    let is_pair = playerHand.length === 2 && playerHand[0] === playerHand[1];
+    let is_pair = playerHand.length === 2 && extractCardValue(playerHand[0]) === extractCardValue(playerHand[1]);
 
     // This is very messy but is working for now.
     // So this counts all the Aces in the hand, if our hand total is over 21
@@ -15,7 +20,7 @@ export function get_best_action(playerHand, dealerCard) {
     // if we have 3 Aces as 13, 11 for one ace, and 2 points for the combined other two.   
     const check_aces = (hand) => {
         let total = hand.reduce((sum, card) => sum + cardTotal(card), 0);
-        let num_aces = hand.filter(card => card === 'A').length;
+        let num_aces = hand.filter(card => extractCardValue(card) === 'A').length;
         
         while (total > 21 && num_aces) {
             total -= 10;
@@ -632,5 +637,5 @@ export function get_best_action(playerHand, dealerCard) {
         }
     }
     
-    return basic_chart[playerTotal]?.[dealerCard];
+    return basic_chart[playerTotal]?.[extractCardValue(dealerCard)];
 }
