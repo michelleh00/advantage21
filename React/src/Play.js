@@ -6,45 +6,46 @@ import './Play.css';
 // TODO:
 // Nav bar
 // Implement split and (double down, maybe?) functionality
-// Real time feedback on plays, can take this from Algorith.js
+// Real-time feedback on plays, can take this from Algorith.js
 // Stylization changes
-// Port tracking to account database, when me make that.
+// Port tracking to account database, when we make that.
 // Card variations other than clubs
-// Hole card differentation
+// Hole card differentiation
 // Surrender functionality
 
-// Need to commment everything all functions at least
+// Need to comment everything all functions at least
 
 const cardValues = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
 
-function Play({timerDuration}) {
+function Play({ timerDuration }) {
   const { isAuthenticated, logout } = useAuth();
   const { userDetails } = useAuth();
 
   const [playerHand, setPlayerHand] = useState([]);
   const [dealerHand, setDealerHand] = useState([]);
   const [gameState, setGameStatus] = useState("Deal Cards to Start");
-  const [timer, setTimer] = useState(10); // Initial timer value in seconds
+  const [timer, setTimer] = useState(timerDuration); // Initial timer value in seconds
   const [isTimeUp, setIsTimeUp] = useState(false);
+  const [timerEnabled, setTimerEnabled] = useState(true); // Initial state for the timer toggle
 
   useEffect(() => {
     let countdown;
-
+  
     const handleTimeout = () => {
-      setTimer(timerDuration); // Reset the timer
+      setTimer(timerDuration);
       setIsTimeUp(true);
     };
-
-    if (timer > 0) {
-      countdown = setTimeout(() => setTimer(timer - 1), 1000); // Decrease timer every second
-    } else {
+  
+    if (timer > 0 && timerEnabled) {
+      countdown = setTimeout(() => setTimer((prevTimer) => prevTimer - 1), 1000);
+    } else if (timer === 0) {
       handleTimeout();
     }
-
+  
     return () => {
       clearTimeout(countdown);
     };
-  }, [timer, timerDuration]);
+  }, [timer, timerDuration, timerEnabled]);
 
   const calculateHandValue = (hand) => {
     let value = 0;
@@ -99,13 +100,6 @@ function Play({timerDuration}) {
   };
 
   const dealerTurn = () => {
-
-    
-
-        // Dont change this, we need to use a push() instead of a spreader function here.
-        // For some reason I was getting an infinte loop where the dealer would have to just
-        // keep drawing cards if the number of cards exceeded two and it would never stop
-        // drawing. 
     let currentDealerHand = [...dealerHand];
     let dealerPoints = calculateHandValue(currentDealerHand);
 
@@ -114,7 +108,7 @@ function Play({timerDuration}) {
       currentDealerHand.push(newCard);
       dealerPoints = calculateHandValue(currentDealerHand);
     }
- // Updates the dealer hand on screen.
+
     setDealerHand(currentDealerHand);
 
     if (dealerPoints > 21) {
@@ -172,9 +166,27 @@ function Play({timerDuration}) {
           <center>Hand Value: {calculateHandValue(dealerHand)}</center>
           <div className="play-middle-display">
             {gameState === "Deal Cards to Start" ? (
-              <button className="play-button" onClick={dealCards}>
-                Deal Cards
-              </button>
+              <>
+                <button className="play-button" onClick={dealCards}>
+                  Deal Cards
+                </button>
+                <label>
+  Timer:
+  <select
+    value={timerDuration}
+    onChange={(e) => {
+      const newTimerDuration = e.target.value;
+      setTimerEnabled(newTimerDuration !== 'off');
+      setTimer(newTimerDuration !== 'off' ? parseInt(newTimerDuration, 10) : 0);
+    }}
+  >
+    <option value="off">Off</option>
+    <option value="5">5 seconds</option>
+    <option value="10">10 seconds</option>
+    <option value="30">30 seconds</option>
+  </select>
+</label>
+              </>
             ) : gameState === "Player's Turn" ? (
               <>
                 <button className="play-button" onClick={playerHit} disabled={isTimeUp}>
@@ -183,7 +195,7 @@ function Play({timerDuration}) {
                 <button className="play-button" onClick={playerStand} disabled={isTimeUp}>
                   Stand
                 </button>
-                {!isTimeUp && (
+                {!isTimeUp && timerEnabled && (
                   <div>
                     Timer: {timer} seconds remaining
                   </div>
