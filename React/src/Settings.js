@@ -5,7 +5,7 @@ const SettingsContext = createContext();
 export const useSettings = () => useContext(SettingsContext);
 
 export const SettingsProvider = ({ children }) => {
-  const storedSettings = JSON.parse(localStorage.getItem('settings'));
+  let storedSettings = JSON.parse(localStorage.getItem('settings'));
   let initialSettings = storedSettings || {
     darkMode: false,
     soft17: false,

@@ -14,7 +14,6 @@ function Account() {
   const navigate = useNavigate();
   const { isAuthenticated, logout } = useAuth();
   const { userDetails } = useAuth();
-
   const { settings, setSettings } = useSettings();
   console.log("Settings:", settings);
 
@@ -26,7 +25,7 @@ function Account() {
 
   useEffect(() => {
     console.log("Dark mode changed:", settings.darkMode);
-    localStorage.setItem("darkMode", settings.darkMode ? "true" : "false");
+
 
     if (settings.darkMode) {
       document.body.classList.add("dark-mode");
@@ -34,6 +33,7 @@ function Account() {
       document.body.classList.remove("dark-mode");
     }
   }, [settings.darkMode]);
+
 
   const handleDarkModeToggle = () =>
     setSettings({ ...settings, darkMode: !settings.darkMode });
@@ -43,8 +43,12 @@ function Account() {
     setSettings({ ...settings, surrender: !settings.surrender });
   const handleHandTimerToggle = () =>
     setSettings({ ...settings, handTimer: !settings.handTimer });
+    const handleDeckChangeToggle = () =>
+    setSettings({ ...settings, deckToggle: !settings.deckToggle });
   const handleTimerChange = (duration) =>
     setSettings({ ...settings, timerDuration: duration });
+    const handleDeckChange = (num) =>
+    setSettings({ ...settings, numDecks: num });
 
   return (
     <div>
@@ -118,6 +122,11 @@ function Account() {
             checked={settings.handTimer}
             onChange={handleHandTimerToggle}
           />
+          <Switch
+            id="deckToggle"
+            checked={settings.deckToggle}
+            onChange={handleDeckChangeToggle}
+          />
         </div>
         <div className="right-options">Hand Timer:</div>
         <div className="right-toggles">
@@ -133,6 +142,23 @@ function Account() {
                 <option value={30}>30 seconds</option>
               </select>
             </div>
+            
+          )}
+
+
+          {settings.deckToggle && (
+            <div>
+              Number of Decks:
+              <select
+                value={settings.numDecks}
+                onChange={handleDeckChange}
+              >
+                <option value={1}>1 Deck</option>
+                <option value={2}>2 Decks</option>
+                <option value={4}>4-8 Decks</option>
+              </select>
+            </div>
+            
           )}
         </div>
         <div className="streaks">
