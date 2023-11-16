@@ -65,8 +65,7 @@
     margin: auto;
 }
 
-
 .dark-mode {
-  background-color: #213C33;
-  color: #CCCCCC;
+  background-color: #1a1a1a; /* Dark background color */
+  color: #ffffff; /* Light text color */
 }
