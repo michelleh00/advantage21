@@ -30,18 +30,11 @@ function HomePage() {
       
       <h1 className="advantage-heading">Advantage 21</h1>
 
-<div className="CalcChip">
-      <Link to="/calculator">
-        <img src="/resources/blackchip.png" alt="black chip"/>
-      </Link>
+      <div className="button-container">
+        <Link to="/calculator" className="button playButton">Calculator</Link>
+        <Link to="/play" className="button playButton">Simulator</Link>
       </div>
-<div className="PlayChip">
-      <Link to="/play">
-        <img src="/resources/redchip.png" alt="red chip"/>
-      </Link>
-      </div>
-      </div>
-      
+    </div>
   );
 }
 

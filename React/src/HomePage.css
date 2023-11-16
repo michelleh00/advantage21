@@ -1,13 +1,27 @@
-.CalcChip {
-    width: 10px; /* Adjust the width as needed to make the image smaller */
-    height: 50px; /* To maintain the aspect ratio while reducing the width */
-    float: inline-start; /* Align the image to the left */
-    margin-left: 250px; /* Add some margin to separate the image from other content */
-  }
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 200px; 
+}
 
-  .PlayChip {
-    width: 10px; /* Adjust the width as needed to make the image smaller */
-    height: 50px; /* To maintain the aspect ratio while reducing the width */
-    float: inline-end; /* Align the image to the left */
-    margin-right: 700px; /* Add some margin to separate the image from other content */
-  }
+.playButton {
+  margin-right: 10px;
+}
+
+.button {
+  display: inline-block;
+  padding: 20px 40px; 
+  background-color: #4CAF50;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 25px; 
+  cursor: pointer;
+  border: none;
+  border-radius: 8px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button:hover {
+  background-color: #45a049;
+}
