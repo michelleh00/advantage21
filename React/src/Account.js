@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./Auth";
 import Switch from "./Switch";
@@ -14,9 +14,13 @@ function Account() {
   const navigate = useNavigate();
   const { isAuthenticated, logout } = useAuth();
   const { userDetails } = useAuth();
-
+  const [selectedFile, setSelectedFile] = useState(null);
   const { settings, setSettings } = useSettings();
-  console.log("Settings:", settings);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
 
   const handleLogout = () => {
     logout();
@@ -25,7 +29,6 @@ function Account() {
   };
 
   useEffect(() => {
-    console.log("Dark mode changed:", settings.darkMode);
     localStorage.setItem("darkMode", settings.darkMode ? "true" : "false");
 
     if (settings.darkMode) {
@@ -84,7 +87,32 @@ function Account() {
       <h1>Welcome, {userDetails.username}!</h1>
 
       <div className="acct-image">
-        <img src="/resources/profile.png" alt="profile icon" />
+        <label htmlFor="file-input" className="upload-label">
+          {selectedFile ? (
+            <img
+              src={URL.createObjectURL(selectedFile)}
+              alt="profile icon"
+              className="profile-picture"
+            />
+          ) : (
+            <>
+              <img
+                className="profile-picture"
+                src="/resources/profile.png"
+                alt="profile icon"
+              />
+              <span className="upload-text">
+                Click Here to Upload a Picture
+              </span>
+            </>
+          )}
+        </label>
+        <input
+          id="file-input"
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+        />
       </div>
 
       <div className={`acct-container ${settings.darkMode ? "dark-mode" : ""}`}>
