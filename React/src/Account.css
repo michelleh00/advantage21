@@ -1,68 +1,95 @@
-.acct-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    position: relative;
+.acct-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  position: relative;
 }
 
-
 .left-options {
-    text-align: left;
-    margin-left: 75px;
-    margin-top: 20px;
-    line-height: 2;    
-    font-size: 30px;
-  }
+  text-align: left;
+  margin-left: 75px;
+  margin-top: 20px;
+  line-height: 2;
+  font-size: 30px;
+}
 
+.left-toggles {
+  position: absolute;
+  margin-left: 450px;
+  margin-top: 0px;
+  font-size: 30px;
+}
 
-  .left-toggles{
-    position: absolute;
-    margin-left: 450px;
-    margin-top: 0px;
-    font-size: 30px;
-  }
+.percentages {
+  text-align: left;
+  margin-left: 75px;
+  margin-top: 30px;
+  font-size: 30px;
+  line-height: 2;
+}
 
+.right-options {
+  position: absolute;
+  margin-left: 1000px;
+  margin-top: 20px;
+  font-size: 30px;
+}
 
-  .percentages{
-    text-align: left;
-    margin-left: 75px;
-    margin-top: 30px;
-    font-size: 30px;
-    line-height: 2;    
+.right-toggles {
+  position: absolute;
+  margin-left: 1300px;
+  margin-top: 52px;
+  font-size: 30px;
+}
 
-  }
- 
-  .right-options{
-    position: absolute;
-    margin-left: 1000px;
-    margin-top: 95px;
-    font-size: 30px;
-  }
+.streaks {
+  position: absolute;
+  margin-left: 1000px;
+  margin-top: 80px;
+  font-size: 30px;
+  line-height: 2;
+}
 
-
-  .right-toggles{
-    position: absolute;
-    margin-left: 1300px;
-    margin-top: 52px;
-    font-size: 30px;
-  }
-
-
-  .streaks{
-    position: absolute;
-    margin-left: 1000px;
-    margin-top: 227px;
-    font-size: 30px;
-    line-height: 2;    
-  }
- 
 .acct-image {
-    width: 10%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    margin: auto;
+  width: 10%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover; 
+}
+
+.upload-label {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-text {
+  font-size: 16px;
+  color: #ffffff; 
+  margin-top: 8px; 
+  white-space: nowrap; 
+}
+
+#file-input {
+  opacity: 0;
+  position: absolute;
+  width: 0.1px;
+  height: 0.1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  cursor: pointer;
 }
 
 .dark-mode {
