@@ -1,6 +1,18 @@
-export function get_best_action(playerHand, dealerCard) {
-    
-    
+import { useSettings } from './Settings';
+
+export function useDeckNum() {
+    const { settings } = useSettings();
+    const numDecks = settings.numDecks;
+    console.log("Num Decks:", numDecks);
+    return numDecks;
+}
+
+
+
+export function get_best_action(playerHand, dealerCard, deckCount) {
+
+    console.log(deckCount);
+
     const extractCardValue = card => card.split('-')[0];
     const containsAce = playerHand.some(card => extractCardValue(card) === 'A');
     const cardTotal = card => {
@@ -624,21 +636,19 @@ export function get_best_action(playerHand, dealerCard) {
         },
     };
 
-    // Here we are checking which chart to reference, with our edge case being Aces.
+
+    if (deckCount >= 4) {
     if (is_pair) {
-        // Special handling for a pair of Aces
         if (is_pair_of_aces) {
-            return pair_chart[12]?.[extractCardValue(dealerCard)]; // or use 2 if your logic treats pair of Aces as '2'
+            return pair_chart[12]?.[extractCardValue(dealerCard)];
         }
         return pair_chart[playerTotal]?.[extractCardValue(dealerCard)];
     }
 
-    // Use the ace chart if there's an Ace in a non-pair hand
     if (containsAce && playerHand.length === 2) {
         return ace_chart[playerTotal]?.[extractCardValue(dealerCard)];
     }
 
-    // Default to basic chart
     return basic_chart[playerTotal]?.[extractCardValue(dealerCard)];
 }
-    
+}

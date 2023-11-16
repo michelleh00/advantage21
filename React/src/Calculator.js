@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { get_best_action } from './Algorithm';
-import { SettingsProvider } from './Settings';
+import { get_best_action, useDeckNum } from './Algorithm';
 import { useSettings } from './Settings';
 import { useAuth } from './Auth';
 import './Calculator.css';
 import './App.css';
+
+
 
 function Calculator() {
   const [playerHand, setPlayerHand] = useState([]);
   const [dealerCard, setDealerCard] = useState(null);
   const [bestPlay, setBestPlay] = useState("");
   const { isAuthenticated, logout } = useAuth();
-
-
-
-  const { settings, setSettings } = useSettings();
+  const { settings } = useSettings();
+  let deckNum = settings.numDecks;
   // Button logic here. Just swaps between if the tag is from
   // the player or dealer section of the buttons.
   // React uses a 'useState' function, it takes two elements, the value and the
@@ -32,18 +31,17 @@ function Calculator() {
       setPlayerHand(prevHand => {
         const newHand = [...prevHand, card];
         if (newHand.length >= 2 && dealerCard) {
-          setBestPlay(get_best_action(newHand, dealerCard));
+          setBestPlay(get_best_action(newHand, dealerCard, deckNum));
         }
         return newHand;
       });
     } else if (type === 'dealer') {
       setDealerCard(card);
       if (playerHand.length >= 2) {
-        setBestPlay(get_best_action(playerHand, card));
+        setBestPlay(get_best_action(playerHand, card, deckNum));
       }
     }
   };
-
 
 
   // Clears the cards from both dealer and player containers.
@@ -80,6 +78,12 @@ function Calculator() {
         <h1>Optimal Play Calculator</h1>
         <div>
           Surrender: {settings.surrender ? 'True' : 'False'}
+        </div>
+        <div>
+          Soft17: {settings.soft17 ? 'True' : 'False'}
+        </div>
+        <div>
+          Decks: {settings.numDecks}
         </div>
 
         <div className="card-sections">

@@ -6,16 +6,24 @@ export const useSettings = () => useContext(SettingsContext);
 
 export const SettingsProvider = ({ children }) => {
   const storedSettings = JSON.parse(localStorage.getItem('settings'));
-  const initialSettings = storedSettings || {
+  let initialSettings = storedSettings || {
     darkMode: false,
     soft17: false,
     surrender: false,
     handTimer: false,
+    deckToggle: false,
+    numDecks: 8,
     timerDuration: 10
   };
 
+  
+
+
+
   const [settings, setSettings] = useState(initialSettings);
+
   useEffect(() => {
+    console.log(settings);
     localStorage.setItem('settings', JSON.stringify(settings));
   }, [settings]);
 

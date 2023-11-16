@@ -38,6 +38,7 @@ button {
 
 .best-play-display {
   margin-bottom: 20px;
+  font-size: calc(1.75em);
 }
 
 .best-play-action {
