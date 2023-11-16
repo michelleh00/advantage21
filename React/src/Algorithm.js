@@ -1,11 +1,5 @@
-import { useSettings } from './Settings';
 
-export function useDeckNum() {
-    const { settings } = useSettings();
-    const numDecks = settings.numDecks;
-    console.log("Num Decks:", numDecks);
-    return numDecks;
-}
+
 
 
 
@@ -651,4 +645,68 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
 
     return basic_chart[playerTotal]?.[extractCardValue(dealerCard)];
 }
+
+
+
+
+const two_basic_chart = {
+
+};
+
+const two_pair_chart = {
+
+};
+
+const two_ace_chart = {
+
+};
+
+
+
+if (deckCount == 2) {
+    if (is_pair) {
+        if (is_pair_of_aces) {
+            return two_pair_chart[12]?.[extractCardValue(dealerCard)];
+        }
+        return two_pair_chart[playerTotal]?.[extractCardValue(dealerCard)];
+    }
+
+    if (containsAce && playerHand.length === 2) {
+        return two_ace_chart[playerTotal]?.[extractCardValue(dealerCard)];
+    }
+
+    return two_basic_chart[playerTotal]?.[extractCardValue(dealerCard)];
+}
+
+
+
+const single_basic_chart = {
+
+};
+
+const single_pair_chart = {
+
+};
+
+const single_ace_chart = {
+
+};
+
+
+if (deckCount == 1) {
+    if (is_pair) {
+        if (is_pair_of_aces) {
+            return single_pair_chart[12]?.[extractCardValue(dealerCard)];
+        }
+        return single_pair_chart[playerTotal]?.[extractCardValue(dealerCard)];
+    }
+
+    if (containsAce && playerHand.length === 2) {
+        return single_ace_chart[playerTotal]?.[extractCardValue(dealerCard)];
+    }
+
+    return single_basic_chart[playerTotal]?.[extractCardValue(dealerCard)];
+}
+
+
 }

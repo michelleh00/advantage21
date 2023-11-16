@@ -15,6 +15,8 @@ function Calculator() {
   const { isAuthenticated, logout } = useAuth();
   const { settings } = useSettings();
   let deckNum = settings.numDecks;
+  let surrender = settings.surrender;
+  let soft17 = settings.soft17;
   // Button logic here. Just swaps between if the tag is from
   // the player or dealer section of the buttons.
   // React uses a 'useState' function, it takes two elements, the value and the
@@ -23,9 +25,9 @@ function Calculator() {
   // appends 'card' to the new array.
 
   const handleCardClick = (cardValue, type) => {
-    const suits = ['C', 'H', 'D', 'S']; // Clubs, Hearts, Diamonds, Spades
-    const randomSuit = suits[Math.floor(Math.random() * suits.length)]; // Randomly select a suit
-    const card = `${cardValue}-${randomSuit}`; // Combine card value with the random suit
+    const suits = ['C', 'H', 'D', 'S'];
+    const randomSuit = suits[Math.floor(Math.random() * suits.length)];
+    const card = `${cardValue}-${randomSuit}`;
 
     if (type === 'player') {
       setPlayerHand(prevHand => {
