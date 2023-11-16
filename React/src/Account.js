@@ -49,11 +49,14 @@ function Account() {
     setSettings({ ...settings, handTimer: !settings.handTimer });
     const handleDeckChangeToggle = () =>
     setSettings({ ...settings, deckToggle: !settings.deckToggle });
-  const handleTimerChange = (duration) =>
-    setSettings({ ...settings, timerDuration: duration });
-    const handleDeckChange = (num) =>
-    setSettings({ ...settings, numDecks: num });
-
+    const handleTimerChange = (event) => {
+      const newTimerDuration = parseInt(event.target.value);
+      setSettings({ ...settings, timerDuration: newTimerDuration });
+    };
+    const handleDeckChange = (event) => {
+    const newDeckNum = parseInt(event.target.value);
+    setSettings({ ...settings, numDecks: newDeckNum });
+    };
   return (
     <div>
       <nav>
