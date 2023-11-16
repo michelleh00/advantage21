@@ -3,6 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './Auth';
 import Switch from "./Switch";
 import "./Account.css";
+import Play from './Play';
+
+// The user's profile is displayed here. We check first if user is logged in
+// and display the appropriate nav options accordingly.
+// Switches are used to apply app variations.
 
 function Account() {
   const navigate = useNavigate();
@@ -96,6 +101,7 @@ function Account() {
             </div>
           )}
         </div>
+        <Play timerDuration={timerDuration} />
         <div className="streaks">
           Best Session Streak:
           <br />

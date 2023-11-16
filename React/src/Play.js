@@ -3,6 +3,18 @@ import { Link } from 'react-router-dom';
 import { useAuth } from './Auth';
 import './Play.css';
 
+// TODO:
+// Nav bar
+// Implement split and (double down, maybe?) functionality
+// Real time feedback on plays, can take this from Algorith.js
+// Stylization changes
+// Port tracking to account database, when me make that.
+// Card variations other than clubs
+// Hole card differentation
+// Surrender functionality
+
+// Need to commment everything all functions at least
+
 const cardValues = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
 
 function Play({timerDuration}) {
@@ -87,6 +99,13 @@ function Play({timerDuration}) {
   };
 
   const dealerTurn = () => {
+
+    
+
+        // Dont change this, we need to use a push() instead of a spreader function here.
+        // For some reason I was getting an infinte loop where the dealer would have to just
+        // keep drawing cards if the number of cards exceeded two and it would never stop
+        // drawing. 
     let currentDealerHand = [...dealerHand];
     let dealerPoints = calculateHandValue(currentDealerHand);
 
@@ -95,7 +114,7 @@ function Play({timerDuration}) {
       currentDealerHand.push(newCard);
       dealerPoints = calculateHandValue(currentDealerHand);
     }
-
+ // Updates the dealer hand on screen.
     setDealerHand(currentDealerHand);
 
     if (dealerPoints > 21) {
