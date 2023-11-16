@@ -187,7 +187,7 @@ function Account() {
               >
                 <option value={1}>1 Deck</option>
                 <option value={2}>2 Decks</option>
-                <option value={4}>4-8 Decks</option>
+                <option value={4}>4+ Decks</option>
               </select>
             </div>
             
