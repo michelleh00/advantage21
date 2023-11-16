@@ -170,19 +170,7 @@ function Play({ timerDuration }) {
                 </button>
                 <label>
   Timer:
-  <select
-    value={timerDuration}
-    onChange={(e) => {
-      const newTimerDuration = e.target.value;
-      setTimerEnabled(newTimerDuration !== 'off');
-      setTimer(newTimerDuration !== 'off' ? parseInt(newTimerDuration, 10) : 0);
-    }}
-  >
-    <option value="off">Off</option>
-    <option value="5">5 seconds</option>
-    <option value="10">10 seconds</option>
-    <option value="30">30 seconds</option>
-  </select>
+
 </label>
               </>
             ) : gameState === "Player's Turn" ? (
