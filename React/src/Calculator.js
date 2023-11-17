@@ -33,14 +33,14 @@ function Calculator() {
       setPlayerHand(prevHand => {
         const newHand = [...prevHand, card];
         if (newHand.length >= 2 && dealerCard) {
-          setBestPlay(get_best_action(newHand, dealerCard, deckNum, surrender));
+          setBestPlay(get_best_action(newHand, dealerCard, deckNum, surrender, soft17));
         }
         return newHand;
       });
     } else if (type === 'dealer') {
       setDealerCard(card);
       if (playerHand.length >= 2) {
-        setBestPlay(get_best_action(playerHand, card, deckNum, surrender));
+        setBestPlay(get_best_action(playerHand, card, deckNum, surrender, soft17));
       }
     }
   };
