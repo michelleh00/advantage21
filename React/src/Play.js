@@ -114,6 +114,11 @@ function Play({ timerDuration }) {
       const newCard = cardValues[Math.floor(Math.random() * 13)];
       const newHand = [...playerHand, newCard];
       setPlayerHand(newHand);
+
+      bestMove = get_best_action(newHand, dealerHand[0], deckNum, surrender, soft17);
+      setBestMove(bestMove);
+
+      console.log('Best Move:', bestMove);
      
       if (calculateHandValue(newHand) > 21) {
         setGameStatus("Player Busted! Dealer Wins!");
@@ -121,11 +126,10 @@ function Play({ timerDuration }) {
 
 
       // determine optimal move from alrogithm
-      bestMove = get_best_action(newHand, dealerHand[0], deckNum, surrender, soft17);
-      setBestMove(bestMove);
 
 
-      if (bestMove === 'Hit') {
+
+      if (bestMove == 'Hit') {
         console.log("player made correct hit");
         setCorrectMoves(correctMoves + 1); // increment streak counter (correctMoves)
       } else { //this may be the culprit
@@ -145,11 +149,8 @@ function Play({ timerDuration }) {
       dealerTurn();
     }
    
-    // determine optimal move from alrogithm
-    bestMove = get_best_action(playerHand, dealerHand[0], deckNum, surrender, soft17);
-    setBestMove(bestMove);
    
-    if (bestMove === 'Stand') {
+    if (bestMove == 'Stand') {
       console.log("player made correct stand");
       setCorrectMoves(correctMoves + 1); // increment streak counter (correctMoves)
     } else {
