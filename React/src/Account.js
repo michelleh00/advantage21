@@ -127,11 +127,13 @@ function Account() {
         <div className="left-options">
           Dark Mode:
           <br />
-          Hit on Soft 17:
+          Dealer Hits on Soft 17:
           <br />
           Allow Surrender:
           <br />
           Hand Timer:
+          <br />
+          Number of Decks:
         </div>
         <div className="left-toggles">
           <Switch
@@ -154,17 +156,24 @@ function Account() {
             checked={settings.handTimer}
             onChange={handleHandTimerToggle}
           />
-          <Switch
-            id="deckToggle"
-            checked={settings.deckToggle}
-            onChange={handleDeckChangeToggle}
-          />
+
+
+
+
+              <select
+                value={settings.numDecks}
+                onChange={handleDeckChange}
+                style={{ marginTop: '3.5em' }}
+              >
+                <option value={1}>1 Deck</option>
+                <option value={2}>2 Decks</option>
+                <option value={4}>4+ Decks</option>
+              </select>
+
         </div>
-        <div className="right-options">Hand Timer:</div>
-        <div className="right-toggles">
+        <div className="timer-menu">
           {settings.handTimer && (
             <div>
-              Timer Duration:
               <select
                 value={settings.timerDuration}
                 onChange={handleTimerChange}
@@ -178,20 +187,6 @@ function Account() {
           )}
 
 
-          {settings.deckToggle && (
-            <div>
-              Number of Decks:
-              <select
-                value={settings.numDecks}
-                onChange={handleDeckChange}
-              >
-                <option value={1}>1 Deck</option>
-                <option value={2}>2 Decks</option>
-                <option value={4}>4+ Decks</option>
-              </select>
-            </div>
-            
-          )}
         </div>
         <div className="streaks">
           Best Session Streak:

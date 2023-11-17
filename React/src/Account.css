@@ -21,6 +21,13 @@
   font-size: 30px;
 }
 
+.timer-menu {
+  position: absolute;
+  margin-left: 550px;
+  margin-top: 210px;
+  font-size: 30px;
+}
+
 .percentages {
   text-align: left;
   margin-left: 75px;
@@ -31,7 +38,7 @@
 
 .right-options {
   position: absolute;
-  margin-left: 1000px;
+  margin-left: 700px;
   margin-top: 20px;
   font-size: 30px;
 }
@@ -45,7 +52,7 @@
 
 .streaks {
   position: absolute;
-  margin-left: 1000px;
+  margin-left: 700px;
   margin-top: 80px;
   font-size: 30px;
   line-height: 2;
