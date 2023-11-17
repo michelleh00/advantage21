@@ -1798,7 +1798,7 @@ export function get_best_action(playerHand, dealerCard, deckCount, surrender) {
 
 
 
-    const sd_h17_S_basic = {
+    const sd_h17_NS_basic = {
         21: {
             '2': 'Stand',
             '3': 'Stand',
@@ -2073,7 +2073,7 @@ export function get_best_action(playerHand, dealerCard, deckCount, surrender) {
     };
 
     // SD, s17, DAS, SA
-    const sd_h17_S_pair = {
+    const sd_h17_NS_pair = {
         20: {
             '2': 'Stand',
             '3': 'Stand',
@@ -2235,7 +2235,7 @@ export function get_best_action(playerHand, dealerCard, deckCount, surrender) {
         }
     };
 
-    const sd_h17_S_ace = {
+    const sd_h17_NS_ace = {
         21: {
             '2': 'Stand',
             '3': 'Stand',
