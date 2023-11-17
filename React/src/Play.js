@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from './Auth';
 import './Play.css';
+import { get_best_action, useDeckNum } from './Algorithm';
+
 
 // TODO:
 // Nav bar
@@ -13,9 +15,12 @@ import './Play.css';
 // Hole card differentiation
 // Surrender functionality
 
+
 // Need to comment everything all functions at least
 
+
 const cardValues = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+
 
 function Play({ timerDuration }) {
   const { isAuthenticated, logout } = useAuth();
@@ -25,25 +30,44 @@ function Play({ timerDuration }) {
   const [timer, setTimer] = useState(timerDuration); // Initial timer value in seconds
   const [isTimeUp, setIsTimeUp] = useState(false);
   const [timerEnabled, setTimerEnabled] = useState(true); // Initial state for the timer toggle
+  const [correctMoves,  setCorrectMoves] = useState(0);
+  let [bestMove, setBestMove] = useState("");
+  const deckNum = useDeckNum();
+
 
   useEffect(() => {
     let countdown;
-  
+ 
     const handleTimeout = () => {
       setTimer(timerDuration);
       setIsTimeUp(true);
     };
-  
+ 
     if (timer > 0 && timerEnabled) {
       countdown = setTimeout(() => setTimer((prevTimer) => prevTimer - 1), 1000);
     } else if (timer === 0) {
       handleTimeout();
     }
-  
+ 
     return () => {
       clearTimeout(countdown);
     };
   }, [timer, timerDuration, timerEnabled]);
+
+
+  //load correctMoves count for streak counter
+  useEffect(() => {
+    const savedCorrectMoves = localStorage.getItem('correctMoves');
+    if (savedCorrectMoves) {
+      setCorrectMoves(parseInt(savedCorrectMoves, 10));
+    }
+  }, []);
+ 
+  //update correctMoves count for streak counter
+  useEffect(() => {
+    localStorage.setItem('correctMoves', correctMoves);
+  }, [correctMoves]);
+
 
   const calculateHandValue = (hand) => {
     let value = 0;
@@ -59,13 +83,16 @@ function Play({ timerDuration }) {
       }
     }
 
+
     while (value > 21 && aces) {
       value -= 10;
       aces -= 1;
     }
 
+
     return value;
   };
+
 
   const dealCards = () => {
     setIsTimeUp(false); // Reset the time-up state
@@ -77,29 +104,61 @@ function Play({ timerDuration }) {
     setGameStatus("Player's Turn");
   };
 
+
   const playerHit = () => {
     if (!isTimeUp) {
       const newCard = cardValues[Math.floor(Math.random() * 13)];
       const newHand = [...playerHand, newCard];
       setPlayerHand(newHand);
-
+     
       if (calculateHandValue(newHand) > 21) {
         setGameStatus("Player Busted! Dealer Wins!");
       }
+
+
+      // determine optimal move from alrogithm
+      bestMove = get_best_action(newHand, dealerHand[0], deckNum);
+      setBestMove(bestMove);
+
+
+      if (bestMove === 'Hit') {
+        console.log("player made correct hit");
+        setCorrectMoves(correctMoves + 1); // increment streak counter (correctMoves)
+      } else { //this may be the culprit
+        console.log("player made incorrect hit");
+        setCorrectMoves(0); // reset streak counter (correctMoves) to 0
+      }
+
+
       setTimer(10); // Reset the timer
     }
   };
+
 
   const playerStand = () => {
     if (!isTimeUp) {
       setGameStatus("Dealer's Turn");
       dealerTurn();
     }
+   
+    // determine optimal move from alrogithm
+    bestMove = get_best_action(playerHand, dealerHand[0], deckNum);
+    setBestMove(bestMove);
+   
+    if (bestMove === 'Stand') {
+      console.log("player made correct stand");
+      setCorrectMoves(correctMoves + 1); // increment streak counter (correctMoves)
+    } else {
+        console.log("player made incorrect stand");
+        setCorrectMoves(0); // reset streak counter (correctMoves) to 0
+      }
   };
+
 
   const dealerTurn = () => {
     let currentDealerHand = [...dealerHand];
     let dealerPoints = calculateHandValue(currentDealerHand);
+
 
     while (dealerPoints < 17) {
       const newCard = cardValues[Math.floor(Math.random() * 13)];
@@ -107,7 +166,9 @@ function Play({ timerDuration }) {
       dealerPoints = calculateHandValue(currentDealerHand);
     }
 
+
     setDealerHand(currentDealerHand);
+
 
     if (dealerPoints > 21) {
       setGameStatus("Dealer Busted! Player Wins!");
@@ -120,6 +181,7 @@ function Play({ timerDuration }) {
     }
   };
 
+
   const resetGame = () => {
     setPlayerHand([]);
     setDealerHand([]);
@@ -127,6 +189,7 @@ function Play({ timerDuration }) {
     setTimer(10); // Reset the timer
     setIsTimeUp(false); // Reset the time-up state
   };
+
 
   return (
     <div>
@@ -150,9 +213,16 @@ function Play({ timerDuration }) {
         </ul>
       </nav>
 
+
       <div className="Play">
         <h1>Blackjack Simulator</h1>
         <h2>{gameState}</h2>
+       
+        <div className="streak-counter">
+        <h3>Current Streak:</h3>
+         <h3>{correctMoves}</h3>
+        </div>
+
 
         <div className="play-card-sections">
           <section className="play-dealer-card-section">
@@ -170,7 +240,19 @@ function Play({ timerDuration }) {
                 </button>
                 <label>
   Timer:
-
+  <select
+    value={timerDuration}
+    onChange={(e) => {
+      const newTimerDuration = e.target.value;
+      setTimerEnabled(newTimerDuration !== 'off');
+      setTimer(newTimerDuration !== 'off' ? parseInt(newTimerDuration, 10) : 0);
+    }}
+  >
+    <option value="off">Off</option>
+    <option value="5">5 seconds</option>
+    <option value="10">10 seconds</option>
+    <option value="30">30 seconds</option>
+  </select>
 </label>
               </>
             ) : gameState === "Player's Turn" ? (
@@ -202,6 +284,7 @@ function Play({ timerDuration }) {
             )}
           </div>
 
+
           <section className="play-player-card-section">
             <h2>Player Hand</h2>
             {playerHand.map((card, index) => (
@@ -215,4 +298,6 @@ function Play({ timerDuration }) {
   );
 }
 
+
 export default Play;
+
