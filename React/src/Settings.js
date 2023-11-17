@@ -12,7 +12,7 @@ export const SettingsProvider = ({ children }) => {
     surrender: false,
     handTimer: false,
     deckToggle: false,
-    numDecks: 8,
+    numDecks: 4,
     timerDuration: 10
   };
 

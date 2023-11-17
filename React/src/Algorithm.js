@@ -1,9 +1,4 @@
-
-
-
-
-
-export function get_best_action(playerHand, dealerCard, deckCount) {
+export function get_best_action(playerHand, dealerCard, deckCount, surrender) {
 
     console.log(deckCount);
 
@@ -12,7 +7,7 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
     const cardTotal = card => {
         let value = extractCardValue(card); // Extract card value
         if (['J', 'Q', 'K'].includes(value)) return 10;
-        if (value === 'A') return 11; 
+        if (value === 'A') return 11;
         return parseInt(value);
     };
 
@@ -27,7 +22,7 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
     const check_aces = (hand) => {
         let total = hand.reduce((sum, card) => sum + cardTotal(card), 0);
         let num_aces = hand.filter(card => extractCardValue(card) === 'A').length;
-        
+
         while (total > 21 && num_aces) {
             total -= 10;
             num_aces -= 1;
@@ -44,8 +39,9 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
     }
 
 
-  const basic_chart = {
-    
+
+
+    const sd_s17_S_basic = {
         21: {
             '2': 'Stand',
             '3': 'Stand',
@@ -109,7 +105,592 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
             'Q': 'Stand',
             'K': 'Stand',
         },
-    
+
+        17: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+        16: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Surrender',
+            'A': 'Surrender',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        15: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        14: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        13: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        12: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        11: {
+            '2': 'Double Down / Hit',
+            '3': 'Double Down / Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Double Down / Hit',
+            '8': 'Double Down / Hit',
+            '9': 'Double Down / Hit',
+            '10': 'Double Down / Hit',
+            'A': 'Double Down / Hit',
+            'J': 'Double Down / Hit',
+            'Q': 'Double Down / Hit',
+            'K': 'Double Down / Hit',
+        },
+
+        10: {
+            '2': 'Double Down / Hit',
+            '3': 'Double Down / Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Double Down / Hit',
+            '8': 'Double Down / Hit',
+            '9': 'Double Down / Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        9: {
+            '2': 'Double Down / Hit',
+            '3': 'Double Down / Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        8: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        7: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Hit',
+            '5': 'Hit',
+            '6': 'Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        6: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Hit',
+            '5': 'Hit',
+            '6': 'Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        5: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Hit',
+            '5': 'Hit',
+            '6': 'Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+    };
+
+    // SD, s17, DAS, SA
+    const sd_s17_S_pair = {
+        20: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        18: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Stand',
+            '8': 'Split',
+            '9': 'Split',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        16: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Split',
+            '9': 'Split',
+            '10': 'Split',
+            'A': 'Split',
+            'J': 'Split',
+            'Q': 'Split',
+            'K': 'Split'
+        },
+
+        14: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Split',
+            '9': 'Hit',
+            '10': 'Stand',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        12: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        10: {
+            '2': 'Double Down / Hit',
+            '3': 'Double Down / Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Double Down / Hit',
+            '8': 'Double Down / Hit',
+            '9': 'Double Down / Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        8: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        6: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Split',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        4: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        2: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Split',
+            '9': 'Split',
+            '10': 'Split',
+            'A': 'Split',
+            'J': 'Split',
+            'Q': 'Split',
+            'K': 'Split'
+        }
+    };
+
+    const sd_s17_S_ace = {
+        21: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        20: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        19: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        18: {
+            '2': 'Stand',
+            '3': 'Double-Down / Hit',
+            '4': 'Double-Down / Hit',
+            '5': 'Double-Down / Hit',
+            '6': 'Double-Down / Hit',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Stand',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        17: {
+            '2': 'Double Down / Hit',
+            '3': 'Double-Down / Hit',
+            '4': 'Double-Down / Hit',
+            '5': 'Double-Down / Hit',
+            '6': 'Double-Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        16: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        15: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        14: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        13: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        }
+    };
+
+
+    // SD, s17, DAS, NS
+    const sd_s17_NS_basic = {
+        21: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+        20: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+        19: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+        18: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
         17: {
             '2': 'Stand',
             '3': 'Stand',
@@ -173,7 +754,1769 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
             'Q': 'Hit',
             'K': 'Hit',
         },
-        
+
+        13: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        12: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        11: {
+            '2': 'Double Down / Hit',
+            '3': 'Double Down / Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Double Down / Hit',
+            '8': 'Double Down / Hit',
+            '9': 'Double Down / Hit',
+            '10': 'Double Down / Hit',
+            'A': 'Double Down / Hit',
+            'J': 'Double Down / Hit',
+            'Q': 'Double Down / Hit',
+            'K': 'Double Down / Hit',
+        },
+
+        10: {
+            '2': 'Double Down / Hit',
+            '3': 'Double Down / Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Double Down / Hit',
+            '8': 'Double Down / Hit',
+            '9': 'Double Down / Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        9: {
+            '2': 'Double Down / Hit',
+            '3': 'Double Down / Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        8: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        7: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Hit',
+            '5': 'Hit',
+            '6': 'Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        6: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Hit',
+            '5': 'Hit',
+            '6': 'Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        5: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Hit',
+            '5': 'Hit',
+            '6': 'Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+    };
+
+    // SD, s17, DAS, NS
+    const sd_s17_NS_pair = {
+        20: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        18: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Stand',
+            '8': 'Split',
+            '9': 'Split',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        16: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Split',
+            '9': 'Split',
+            '10': 'Split',
+            'A': 'Split',
+            'J': 'Split',
+            'Q': 'Split',
+            'K': 'Split'
+        },
+
+        14: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Split',
+            '9': 'Hit',
+            '10': 'Stand',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        12: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        10: {
+            '2': 'Double Down / Hit',
+            '3': 'Double Down / Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Double Down / Hit',
+            '8': 'Double Down / Hit',
+            '9': 'Double Down / Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        8: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        6: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Split',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        4: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        2: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Split',
+            '9': 'Split',
+            '10': 'Split',
+            'A': 'Split',
+            'J': 'Split',
+            'Q': 'Split',
+            'K': 'Split'
+        }
+    };
+
+    const sd_s17_NS_ace = {
+        21: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        20: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        19: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        18: {
+            '2': 'Stand',
+            '3': 'Double-Down / Hit',
+            '4': 'Double-Down / Hit',
+            '5': 'Double-Down / Hit',
+            '6': 'Double-Down / Hit',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Stand',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        17: {
+            '2': 'Double Down / Hit',
+            '3': 'Double-Down / Hit',
+            '4': 'Double-Down / Hit',
+            '5': 'Double-Down / Hit',
+            '6': 'Double-Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        16: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        15: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        14: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        13: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        }
+    };
+
+
+
+
+    const sd_h17_S_basic = {
+        21: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+        20: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+        19: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+        18: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+        17: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Surrender',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+        16: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Surrender',
+            'A': 'Surrender',
+            'J': 'Surrender',
+            'Q': 'Surrender',
+            'K': 'Surrender',
+        },
+
+        15: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Surrender',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        14: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        13: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        12: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        11: {
+            '2': 'Double Down / Hit',
+            '3': 'Double Down / Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Double Down / Hit',
+            '8': 'Double Down / Hit',
+            '9': 'Double Down / Hit',
+            '10': 'Double Down / Hit',
+            'A': 'Double Down / Hit',
+            'J': 'Double Down / Hit',
+            'Q': 'Double Down / Hit',
+            'K': 'Double Down / Hit',
+        },
+
+        10: {
+            '2': 'Double Down / Hit',
+            '3': 'Double Down / Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Double Down / Hit',
+            '8': 'Double Down / Hit',
+            '9': 'Double Down / Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        9: {
+            '2': 'Double Down / Hit',
+            '3': 'Double Down / Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        8: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        7: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Hit',
+            '5': 'Hit',
+            '6': 'Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        6: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Hit',
+            '5': 'Hit',
+            '6': 'Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        5: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Hit',
+            '5': 'Hit',
+            '6': 'Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+    };
+
+    // SD, s17, DAS, SA
+    const sd_h17_S_pair = {
+        20: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        18: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Stand',
+            '8': 'Split',
+            '9': 'Split',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        16: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Split',
+            '9': 'Split',
+            '10': 'Split',
+            'A': 'Split',
+            'J': 'Split',
+            'Q': 'Split',
+            'K': 'Split'
+        },
+
+        14: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Split',
+            '9': 'Hit',
+            '10': 'Surrender',
+            'A': 'Surrender',
+            'J': 'Surrender',
+            'Q': 'Surrender',
+            'K': 'Surrender'
+        },
+
+        12: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        10: {
+            '2': 'Double Down / Hit',
+            '3': 'Double Down / Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Double Down / Hit',
+            '8': 'Double Down / Hit',
+            '9': 'Double Down / Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        8: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        6: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Split',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        4: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        2: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Split',
+            '9': 'Split',
+            '10': 'Split',
+            'A': 'Split',
+            'J': 'Split',
+            'Q': 'Split',
+            'K': 'Split'
+        }
+    };
+
+    const sd_h17_S_ace = {
+        21: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        20: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        19: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Double-Down / Hit',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        18: {
+            '2': 'Stand',
+            '3': 'Double-Down / Hit',
+            '4': 'Double-Down / Hit',
+            '5': 'Double-Down / Hit',
+            '6': 'Double-Down / Hit',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        17: {
+            '2': 'Double Down / Hit',
+            '3': 'Double-Down / Hit',
+            '4': 'Double-Down / Hit',
+            '5': 'Double-Down / Hit',
+            '6': 'Double-Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        16: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        15: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        14: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        13: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        }
+    };
+
+
+
+
+    const sd_h17_S_basic = {
+        21: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+        20: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+        19: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+        18: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+        17: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+        16: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        15: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Surrender',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        14: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        13: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        12: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        11: {
+            '2': 'Double Down / Hit',
+            '3': 'Double Down / Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Double Down / Hit',
+            '8': 'Double Down / Hit',
+            '9': 'Double Down / Hit',
+            '10': 'Double Down / Hit',
+            'A': 'Double Down / Hit',
+            'J': 'Double Down / Hit',
+            'Q': 'Double Down / Hit',
+            'K': 'Double Down / Hit',
+        },
+
+        10: {
+            '2': 'Double Down / Hit',
+            '3': 'Double Down / Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Double Down / Hit',
+            '8': 'Double Down / Hit',
+            '9': 'Double Down / Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        9: {
+            '2': 'Double Down / Hit',
+            '3': 'Double Down / Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        8: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        7: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Hit',
+            '5': 'Hit',
+            '6': 'Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        6: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Hit',
+            '5': 'Hit',
+            '6': 'Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        5: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Hit',
+            '5': 'Hit',
+            '6': 'Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+    };
+
+    // SD, s17, DAS, SA
+    const sd_h17_S_pair = {
+        20: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        18: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Stand',
+            '8': 'Split',
+            '9': 'Split',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        16: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Split',
+            '9': 'Split',
+            '10': 'Split',
+            'A': 'Split',
+            'J': 'Split',
+            'Q': 'Split',
+            'K': 'Split'
+        },
+
+        14: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Split',
+            '9': 'Hit',
+            '10': 'Surrender',
+            'A': 'Surrender',
+            'J': 'Surrender',
+            'Q': 'Surrender',
+            'K': 'Surrender'
+        },
+
+        12: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        10: {
+            '2': 'Double Down / Hit',
+            '3': 'Double Down / Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Double Down / Hit',
+            '8': 'Double Down / Hit',
+            '9': 'Double Down / Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        8: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        6: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Split',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        4: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        2: {
+            '2': 'Split',
+            '3': 'Split',
+            '4': 'Split',
+            '5': 'Split',
+            '6': 'Split',
+            '7': 'Split',
+            '8': 'Split',
+            '9': 'Split',
+            '10': 'Split',
+            'A': 'Split',
+            'J': 'Split',
+            'Q': 'Split',
+            'K': 'Split'
+        }
+    };
+
+    const sd_h17_S_ace = {
+        21: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        20: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        19: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Double-Down / Hit',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand'
+        },
+
+        18: {
+            '2': 'Stand',
+            '3': 'Double-Down / Hit',
+            '4': 'Double-Down / Hit',
+            '5': 'Double-Down / Hit',
+            '6': 'Double-Down / Hit',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        17: {
+            '2': 'Double Down / Hit',
+            '3': 'Double-Down / Hit',
+            '4': 'Double-Down / Hit',
+            '5': 'Double-Down / Hit',
+            '6': 'Double-Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        16: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        15: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        14: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        },
+
+        13: {
+            '2': 'Hit',
+            '3': 'Hit',
+            '4': 'Double Down / Hit',
+            '5': 'Double Down / Hit',
+            '6': 'Double Down / Hit',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit'
+        }
+    };
+
+
+
+
+
+
+    
+    const basic_chart = {
+
+        21: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+        20: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+        19: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+        18: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+        17: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Stand',
+            '8': 'Stand',
+            '9': 'Stand',
+            '10': 'Stand',
+            'A': 'Stand',
+            'J': 'Stand',
+            'Q': 'Stand',
+            'K': 'Stand',
+        },
+
+        16: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        15: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
+        14: {
+            '2': 'Stand',
+            '3': 'Stand',
+            '4': 'Stand',
+            '5': 'Stand',
+            '6': 'Stand',
+            '7': 'Hit',
+            '8': 'Hit',
+            '9': 'Hit',
+            '10': 'Hit',
+            'A': 'Hit',
+            'J': 'Hit',
+            'Q': 'Hit',
+            'K': 'Hit',
+        },
+
         13: {
             '2': 'Stand',
             '3': 'Stand',
@@ -326,7 +2669,7 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
             '3': 'Stand',
             '4': 'Stand',
             '5': 'Stand',
-            '6': 'Stand', 
+            '6': 'Stand',
             '7': 'Stand',
             '8': 'Stand',
             '9': 'Stand',
@@ -342,7 +2685,7 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
             '3': 'Split',
             '4': 'Split',
             '5': 'Split',
-            '6': 'Split', 
+            '6': 'Split',
             '7': 'Stand',
             '8': 'Split',
             '9': 'Split',
@@ -358,7 +2701,7 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
             '3': 'Split',
             '4': 'Split',
             '5': 'Split',
-            '6': 'Split', 
+            '6': 'Split',
             '7': 'Split',
             '8': 'Split',
             '9': 'Split',
@@ -374,7 +2717,7 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
             '3': 'Split',
             '4': 'Split',
             '5': 'Split',
-            '6': 'Split', 
+            '6': 'Split',
             '7': 'Split',
             '8': 'Hit',
             '9': 'Hit',
@@ -390,7 +2733,7 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
             '3': 'Split',
             '4': 'Split',
             '5': 'Split',
-            '6': 'Split', 
+            '6': 'Split',
             '7': 'Hit',
             '8': 'Hit',
             '9': 'Hit',
@@ -400,13 +2743,13 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
             'Q': 'Hit',
             'K': 'Hit'
         },
-        
+
         10: {
             '2': 'Double Down / Hit',
             '3': 'Double Down / Hit',
             '4': 'Double Down / Hit',
             '5': 'Double Down / Hit',
-            '6': 'Double Down / Hit', 
+            '6': 'Double Down / Hit',
             '7': 'Double Down / Hit',
             '8': 'Double Down / Hit',
             '9': 'Double Down / Hit',
@@ -416,13 +2759,13 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
             'Q': 'Hit',
             'K': 'Hit'
         },
-        
+
         8: {
             '2': 'Hit',
             '3': 'Hit',
             '4': 'Hit',
             '5': 'Split',
-            '6': 'Split', 
+            '6': 'Split',
             '7': 'Split',
             '8': 'Hit',
             '9': 'Hit',
@@ -438,7 +2781,7 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
             '3': 'Split',
             '4': 'Split',
             '5': 'Split',
-            '6': 'Split', 
+            '6': 'Split',
             '7': 'Split',
             '8': 'Hit',
             '9': 'Hit',
@@ -454,7 +2797,7 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
             '3': 'Split',
             '4': 'Split',
             '5': 'Split',
-            '6': 'Split', 
+            '6': 'Split',
             '7': 'Split',
             '8': 'Hit',
             '9': 'Hit',
@@ -470,7 +2813,7 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
             '3': 'Split',
             '4': 'Split',
             '5': 'Split',
-            '6': 'Split', 
+            '6': 'Split',
             '7': 'Split',
             '8': 'Split',
             '9': 'Split',
@@ -482,15 +2825,15 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
         },
 
     };
-    
-   const ace_chart = {
-        
+
+    const ace_chart = {
+
         21: {
             '2': 'Stand',
             '3': 'Stand',
             '4': 'Stand',
             '5': 'Stand',
-            '6': 'Stand', 
+            '6': 'Stand',
             '7': 'Stand',
             '8': 'Stand',
             '9': 'Stand',
@@ -506,7 +2849,7 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
             '3': 'Stand',
             '4': 'Stand',
             '5': 'Stand',
-            '6': 'Stand', 
+            '6': 'Stand',
             '7': 'Stand',
             '8': 'Stand',
             '9': 'Stand',
@@ -522,7 +2865,7 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
             '3': 'Stand',
             '4': 'Stand',
             '5': 'Stand',
-            '6': 'Stand', 
+            '6': 'Stand',
             '7': 'Stand',
             '8': 'Stand',
             '9': 'Stand',
@@ -538,7 +2881,7 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
             '3': 'Double-Down / Hit',
             '4': 'Double-Down / Hit',
             '5': 'Double-Down / Hit',
-            '6': 'Double-Down / Hit', 
+            '6': 'Double-Down / Hit',
             '7': 'Stand',
             '8': 'Stand',
             '9': 'Hit',
@@ -554,7 +2897,7 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
             '3': 'Double-Down / Hit',
             '4': 'Double-Down / Hit',
             '5': 'Double-Down / Hit',
-            '6': 'Double-Down / Hit', 
+            '6': 'Double-Down / Hit',
             '7': 'Hit',
             '8': 'Hit',
             '9': 'Hit',
@@ -570,7 +2913,7 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
             '3': 'Hit',
             '4': 'Double Down / Hit',
             '5': 'Double Down / Hit',
-            '6': 'Double Down / Hit', 
+            '6': 'Double Down / Hit',
             '7': 'Hit',
             '8': 'Hit',
             '9': 'Hit',
@@ -586,7 +2929,7 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
             '3': 'Hit',
             '4': 'Double Down / Hit',
             '5': 'Double Down / Hit',
-            '6': 'Double Down / Hit', 
+            '6': 'Double Down / Hit',
             '7': 'Hit',
             '8': 'Hit',
             '9': 'Hit',
@@ -602,7 +2945,7 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
             '3': 'Hit',
             '4': 'Hit',
             '5': 'Double Down / Hit',
-            '6': 'Double Down / Hit', 
+            '6': 'Double Down / Hit',
             '7': 'Hit',
             '8': 'Hit',
             '9': 'Hit',
@@ -618,7 +2961,7 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
             '3': 'Hit',
             '4': 'Hit',
             '5': 'Double Down / Hit',
-            '6': 'Double Down / Hit', 
+            '6': 'Double Down / Hit',
             '7': 'Hit',
             '8': 'Hit',
             '9': 'Hit',
@@ -630,83 +2973,91 @@ export function get_best_action(playerHand, dealerCard, deckCount) {
         },
     };
 
+    const two_basic_chart = {
 
-    if (deckCount >= 4) {
-    if (is_pair) {
-        if (is_pair_of_aces) {
-            return pair_chart[12]?.[extractCardValue(dealerCard)];
+    };
+
+    const two_pair_chart = {
+
+    };
+
+    const two_ace_chart = {
+
+    };
+
+
+    if (deckCount >= 4 && !surrender) {
+        if (is_pair) {
+            if (is_pair_of_aces) {
+                return pair_chart[12]?.[extractCardValue(dealerCard)];
+            }
+            return pair_chart[playerTotal]?.[extractCardValue(dealerCard)];
         }
-        return pair_chart[playerTotal]?.[extractCardValue(dealerCard)];
-    }
 
-    if (containsAce && playerHand.length === 2) {
-        return ace_chart[playerTotal]?.[extractCardValue(dealerCard)];
-    }
-
-    return basic_chart[playerTotal]?.[extractCardValue(dealerCard)];
-}
-
-
-
-
-const two_basic_chart = {
-
-};
-
-const two_pair_chart = {
-
-};
-
-const two_ace_chart = {
-
-};
-
-
-
-if (deckCount == 2) {
-    if (is_pair) {
-        if (is_pair_of_aces) {
-            return two_pair_chart[12]?.[extractCardValue(dealerCard)];
+        if (containsAce && playerHand.length === 2) {
+            return ace_chart[playerTotal]?.[extractCardValue(dealerCard)];
         }
-        return two_pair_chart[playerTotal]?.[extractCardValue(dealerCard)];
+
+        return basic_chart[playerTotal]?.[extractCardValue(dealerCard)];
     }
 
-    if (containsAce && playerHand.length === 2) {
-        return two_ace_chart[playerTotal]?.[extractCardValue(dealerCard)];
-    }
-
-    return two_basic_chart[playerTotal]?.[extractCardValue(dealerCard)];
-}
 
 
 
-const single_basic_chart = {
-
-};
-
-const single_pair_chart = {
-
-};
-
-const single_ace_chart = {
-
-};
 
 
-if (deckCount == 1) {
-    if (is_pair) {
-        if (is_pair_of_aces) {
-            return single_pair_chart[12]?.[extractCardValue(dealerCard)];
+
+    if (deckCount == 2) {
+        if (is_pair) {
+            if (is_pair_of_aces) {
+                return two_pair_chart[12]?.[extractCardValue(dealerCard)];
+            }
+            return two_pair_chart[playerTotal]?.[extractCardValue(dealerCard)];
         }
-        return single_pair_chart[playerTotal]?.[extractCardValue(dealerCard)];
+
+        if (containsAce && playerHand.length === 2) {
+            return two_ace_chart[playerTotal]?.[extractCardValue(dealerCard)];
+        }
+
+        return two_basic_chart[playerTotal]?.[extractCardValue(dealerCard)];
     }
 
-    if (containsAce && playerHand.length === 2) {
-        return single_ace_chart[playerTotal]?.[extractCardValue(dealerCard)];
+
+
+
+    if (deckCount == 1 && !surrender) {
+        if (is_pair) {
+            if (is_pair_of_aces) {
+                return sd_s17_NS_pair[12]?.[extractCardValue(dealerCard)];
+            }
+            return sd_s17_NS_pair[playerTotal]?.[extractCardValue(dealerCard)];
+        }
+
+        if (containsAce && playerHand.length === 2) {
+            return sd_s17_NS_ace[playerTotal]?.[extractCardValue(dealerCard)];
+        }
+
+        return sd_s17_NS_basic[playerTotal]?.[extractCardValue(dealerCard)];
     }
 
-    return single_basic_chart[playerTotal]?.[extractCardValue(dealerCard)];
-}
 
+
+
+
+
+    if (deckCount == 1 && surrender) {
+        if (is_pair) {
+            if (is_pair_of_aces) {
+                return sd_s17_S_pair[12]?.[extractCardValue(dealerCard)];
+            }
+            return sd_s17_S_pair[playerTotal]?.[extractCardValue(dealerCard)];
+        }
+
+        if (containsAce && playerHand.length === 2) {
+            return sd_s17_S_ace[playerTotal]?.[extractCardValue(dealerCard)];
+        }
+
+        return sd_s17_S_basic[playerTotal]?.[extractCardValue(dealerCard)];
+    }
 
 }
