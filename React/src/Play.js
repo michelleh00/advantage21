@@ -35,6 +35,8 @@ function Play({ timerDuration }) {
   let [bestMove, setBestMove] = useState("");
   const { settings } = useSettings();
   let deckNum = settings.numDecks;
+  let surrender = settings.surrender;
+  let soft17 = settings.soft17;
 
 
   useEffect(() => {
@@ -119,7 +121,7 @@ function Play({ timerDuration }) {
 
 
       // determine optimal move from alrogithm
-      bestMove = get_best_action(newHand, dealerHand[0], deckNum);
+      bestMove = get_best_action(newHand, dealerHand[0], deckNum, surrender, soft17);
       setBestMove(bestMove);
 
 
@@ -144,7 +146,7 @@ function Play({ timerDuration }) {
     }
    
     // determine optimal move from alrogithm
-    bestMove = get_best_action(playerHand, dealerHand[0], deckNum);
+    bestMove = get_best_action(playerHand, dealerHand[0], deckNum, surrender, soft17);
     setBestMove(bestMove);
    
     if (bestMove === 'Stand') {
