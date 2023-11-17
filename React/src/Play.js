@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from './Auth';
+import { useSettings } from './Settings';
 import './Play.css';
-import { get_best_action, useDeckNum } from './Algorithm';
+import { get_best_action} from './Algorithm';
 
 
 // TODO:
@@ -32,7 +33,8 @@ function Play({ timerDuration }) {
   const [timerEnabled, setTimerEnabled] = useState(true); // Initial state for the timer toggle
   const [correctMoves,  setCorrectMoves] = useState(0);
   let [bestMove, setBestMove] = useState("");
-  const deckNum = useDeckNum();
+  const { settings } = useSettings();
+  let deckNum = settings.numDecks;
 
 
   useEffect(() => {
