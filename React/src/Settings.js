@@ -16,10 +16,6 @@ export const SettingsProvider = ({ children }) => {
     timerDuration: 10
   };
 
-  
-
-
-
   const [settings, setSettings] = useState(initialSettings);
 
   useEffect(() => {

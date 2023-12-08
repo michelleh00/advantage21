@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from './Auth';
 import { useSettings } from './Settings';
 import './Play.css';
-import { get_best_action} from './Algorithm';
+import { get_best_action } from './Algorithm';
 
 
 // TODO:
@@ -20,43 +20,53 @@ import { get_best_action} from './Algorithm';
 // Need to comment everything all functions at least
 
 
+const suits = ['H', 'D', 'C', 'S'];
 const cardValues = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
 
+// Function to deal a single card
+const dealCard = () => {
+  const cardValue = cardValues[Math.floor(Math.random() * cardValues.length)];
+  const suit = suits[Math.floor(Math.random() * suits.length)];
+  return `${cardValue}-${suit}`;
+};
 
-function Play({ timerDuration }) {
+
+function Play() {
+  const { settings, setSettings } = useSettings(); // Destructure setSettings here
+  const timerDuration = settings.timerDuration;
   const { isAuthenticated, logout } = useAuth();
   const [playerHand, setPlayerHand] = useState([]);
   const [dealerHand, setDealerHand] = useState([]);
   const [gameState, setGameStatus] = useState("Deal Cards to Start");
-  const [timer, setTimer] = useState(timerDuration); // Initial timer value in seconds
+  const [timer, setTimer] = useState(timerDuration);
   const [isTimeUp, setIsTimeUp] = useState(false);
-  const [timerEnabled, setTimerEnabled] = useState(true); // Initial state for the timer toggle
-  const [correctMoves,  setCorrectMoves] = useState(0);
+  const [timerEnabled, setTimerEnabled] = useState(true);
+  const [correctMoves, setCorrectMoves] = useState(0);
   let [bestMove, setBestMove] = useState("");
-  const { settings } = useSettings();
   let deckNum = settings.numDecks;
   let surrender = settings.surrender;
   let soft17 = settings.soft17;
+  let handTimer = settings.handTimer;
 
 
   useEffect(() => {
     let countdown;
- 
+
     const handleTimeout = () => {
       setTimer(timerDuration);
       setIsTimeUp(true);
     };
- 
-    if (timer > 0 && timerEnabled) {
+
+    if (handTimer && timer > 0 && timerEnabled) {
       countdown = setTimeout(() => setTimer((prevTimer) => prevTimer - 1), 1000);
-    } else if (timer === 0) {
+    } else if (handTimer && timer === 0) {
       handleTimeout();
     }
- 
+
     return () => {
       clearTimeout(countdown);
     };
-  }, [timer, timerDuration, timerEnabled]);
+  }, [timer, timerDuration, timerEnabled, handTimer]);
 
 
   //load correctMoves count for streak counter
@@ -66,7 +76,7 @@ function Play({ timerDuration }) {
       setCorrectMoves(parseInt(savedCorrectMoves, 10));
     }
   }, []);
- 
+
   //update correctMoves count for streak counter
   useEffect(() => {
     localStorage.setItem('correctMoves', correctMoves);
@@ -76,33 +86,39 @@ function Play({ timerDuration }) {
   const calculateHandValue = (hand) => {
     let value = 0;
     let aces = 0;
+
     for (let card of hand) {
-      if (['J', 'Q', 'K'].includes(card)) {
+      const cardValue = card.split('-')[0]; // Extract the value from card
+
+      if (['J', 'Q', 'K'].includes(cardValue)) {
         value += 10;
-      } else if (card === 'A') {
+      } else if (cardValue === 'A') {
         value += 11;
         aces += 1;
       } else {
-        value += parseInt(card);
+        value += parseInt(cardValue);
       }
     }
 
-
+    // Adjust for Aces
     while (value > 21 && aces) {
       value -= 10;
       aces -= 1;
     }
 
-
     return value;
   };
 
 
+
+
   const dealCards = () => {
-    setIsTimeUp(false); // Reset the time-up state
-    setTimer(10); // Reset the timer
-    const playerCards = [cardValues[Math.floor(Math.random() * 13)], cardValues[Math.floor(Math.random() * 13)]];
-    const dealerCards = [cardValues[Math.floor(Math.random() * 13)]];
+    setIsTimeUp(false);
+    if (handTimer) {
+      setTimer(timerDuration);
+    }
+    const playerCards = [dealCard(), dealCard()];
+    const dealerCards = [dealCard()];
     setPlayerHand(playerCards);
     setDealerHand(dealerCards);
     setGameStatus("Player's Turn");
@@ -111,18 +127,21 @@ function Play({ timerDuration }) {
 
   const playerHit = () => {
     if (!isTimeUp) {
-      const newCard = cardValues[Math.floor(Math.random() * 13)];
+      const newCard = dealCard();
       const newHand = [...playerHand, newCard];
+      if (handTimer) {
+        setTimer(timerDuration);
+      }
       setPlayerHand(newHand);
-  
+
       if (calculateHandValue(newHand) > 21) {
         setGameStatus("Player Busted! Dealer Wins!");
       }
-  
+
       // determine optimal move from the algorithm
       bestMove = get_best_action(newHand, dealerHand[0], deckNum, surrender, soft17);
       setBestMove(bestMove);
-  
+
       if (bestMove === 'Hit' || bestMove === 'Double Down' || bestMove === 'Surrender') {
         console.log("player made correct move");
         setCorrectMoves((prevMoves) => {
@@ -135,18 +154,19 @@ function Play({ timerDuration }) {
         console.log("player made incorrect move");
         setCorrectMoves(0); // reset streak counter (correctMoves) to 0
       }
-  
+
       setTimer(10); // Reset the timer
     }
   }
 
-  
+
   const playerStand = () => {
     if (!isTimeUp) {
+
       // determine optimal move from the algorithm
       bestMove = get_best_action(playerHand, dealerHand[0], deckNum, surrender, soft17);
       setBestMove(bestMove);
-  
+
       if (bestMove === 'Stand' || bestMove === 'Double Down' || bestMove === 'Surrender') {
         console.log("player made correct move");
         setCorrectMoves((prevMoves) => {
@@ -155,12 +175,12 @@ function Play({ timerDuration }) {
           localStorage.setItem('highestMoves', highestMoves);
           return updatedMoves;
         });
-      }else {
+      } else {
         console.log("player made incorrect move");
         setCorrectMoves(0); // reset streak counter (correctMoves) to 0
       }
     }
-  
+
     setGameStatus("Dealer's Turn");
     dealerTurn();
   };
@@ -170,13 +190,11 @@ function Play({ timerDuration }) {
     let currentDealerHand = [...dealerHand];
     let dealerPoints = calculateHandValue(currentDealerHand);
 
-
     while (dealerPoints < 17) {
-      const newCard = cardValues[Math.floor(Math.random() * 13)];
+      const newCard = dealCard(); // Make sure this function generates card with suit
       currentDealerHand.push(newCard);
       dealerPoints = calculateHandValue(currentDealerHand);
     }
-
 
     setDealerHand(currentDealerHand);
 
@@ -197,7 +215,9 @@ function Play({ timerDuration }) {
     setPlayerHand([]);
     setDealerHand([]);
     setGameStatus("Deal Cards to Start");
-    setTimer(10); // Reset the timer
+    if (handTimer) {
+      setTimer(timerDuration);
+    }
     setIsTimeUp(false); // Reset the time-up state
   };
 
@@ -228,10 +248,10 @@ function Play({ timerDuration }) {
       <div className="Play">
         <h1>Blackjack Simulator</h1>
         <h2>{gameState}</h2>
-       
+
         <div className="streak-counter">
-        <h3>Current Streak:</h3>
-         <h3>{correctMoves}</h3>
+          <h3>Current Streak:</h3>
+          <h3>{correctMoves}</h3>
         </div>
 
 
@@ -239,7 +259,7 @@ function Play({ timerDuration }) {
           <section className="play-dealer-card-section">
             <h2>Dealer's Hand</h2>
             {dealerHand.map((card, index) => (
-              <img src={`/resources/${card}.png`} alt={`${card} card`} className="play-card-image" key={index} />
+              <img src={`/resources/cards/${card}.png`} alt={`${card} card`} className="play-card-image" key={index} />
             ))}
           </section>
           <center>Hand Value: {calculateHandValue(dealerHand)}</center>
@@ -250,31 +270,43 @@ function Play({ timerDuration }) {
                   Deal Cards
                 </button>
                 <label>
-  Timer:
-  <select
-    value={timerDuration}
-    onChange={(e) => {
-      const newTimerDuration = e.target.value;
-      setTimerEnabled(newTimerDuration !== 'off');
-      setTimer(newTimerDuration !== 'off' ? parseInt(newTimerDuration, 10) : 0);
-    }}
-  >
-    <option value="off">Off</option>
-    <option value="5">5 seconds</option>
-    <option value="10">10 seconds</option>
-    <option value="30">30 seconds</option>
-  </select>
-</label>
+                  Timer:
+                  <select
+                    value={handTimer ? timerDuration.toString() : 'off'}
+                    onChange={(e) => {
+                      const newTimerDuration = e.target.value;
+                      if (newTimerDuration === 'off') {
+                        setTimerEnabled(false);
+                        setSettings(prevSettings => ({ ...prevSettings, handTimer: false }));
+                      } else {
+                        setTimerEnabled(true);
+                        setTimer(parseInt(newTimerDuration, 10));
+                        setSettings(prevSettings => ({
+                          ...prevSettings,
+                          handTimer: true,
+                          timerDuration: parseInt(newTimerDuration, 10)
+                        }));
+                      }
+                    }}
+                  >
+                    <option value="off">Off</option>
+                    <option value="5">5 seconds</option>
+                    <option value="10">10 seconds</option>
+                    <option value="30">30 seconds</option>
+                  </select>
+                </label>
               </>
             ) : gameState === "Player's Turn" ? (
               <>
-                <button className="play-button" onClick={playerHit} disabled={isTimeUp}>
-                  Hit
-                </button>
-                <button className="play-button" onClick={playerStand} disabled={isTimeUp}>
-                  Stand
-                </button>
-                {!isTimeUp && timerEnabled && (
+                <div className="play-action-buttons">
+                  <button className="play-button" onClick={playerHit} disabled={isTimeUp}>
+                    Hit
+                  </button>
+                  <button className="play-button" onClick={playerStand} disabled={isTimeUp}>
+                    Stand
+                  </button>
+                </div>
+                {!isTimeUp && timerEnabled && handTimer && (
                   <div>
                     Timer: {timer} seconds remaining
                   </div>
@@ -289,7 +321,7 @@ function Play({ timerDuration }) {
                 )}
               </>
             ) : (
-              <button className="play-reset-button" onClick={resetGame}>
+              <button className="play-reset-button" onClick={dealCards}>
                 Redeal
               </button>
             )}
@@ -299,7 +331,7 @@ function Play({ timerDuration }) {
           <section className="play-player-card-section">
             <h2>Player Hand</h2>
             {playerHand.map((card, index) => (
-              <img src={`/resources/${card}.png`} className="play-card-image" key={index} />
+              <img src={`/resources/cards/${card}.png`} alt={`${card} card`} className="play-card-image" key={index} />
             ))}
           </section>
           <center>Hand Value: {calculateHandValue(playerHand)}</center>
