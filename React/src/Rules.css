@@ -1,24 +1,22 @@
-p {
+.rules-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .rules-content p {
     font-size: 16px;
-    line-height: 1.6;
     margin-top: 10px;
-    color: rgb(202, 202, 202);;
-}
+    color: rgb(202, 202, 202);
+    text-align: left; 
+    line-height: 250%;
+  }
 
-.card-values {
-    font-weight: bold;
-    text-align: left;
-    margin-left: 20%;
-}
+  .rules{
+    text-align: center;
+  }
 
-.game-play {
-    font-weight: bold;
-    text-align: left;
-    margin-left: 20%;
-}
-
-.winning-payouts {
-    font-weight: bold;
-    text-align: left;
-    margin-left: 20%;
-}
+  .terms{
+    line-height: 2.0%;
+  }
+  
