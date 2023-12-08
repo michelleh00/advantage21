@@ -33,8 +33,14 @@
   .react-switch-checkbox:checked + .react-switch-label .react-switch-button {
     left: calc(100% - 2px);
     transform: translateX(-100%);
+    background: #35654D;
   }
-  
+  .react-switch-checkbox:not(:checked) + .react-switch-label .react-switch-button {
+    left: 2px; 
+    transform: translateX(0); 
+    background: #580000; 
+  }
+
   .react-switch-label:active .react-switch-button {
     width: 60px;
   }
