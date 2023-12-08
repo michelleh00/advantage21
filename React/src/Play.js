@@ -32,7 +32,7 @@ const dealCard = () => {
 
 
 function Play() {
-  const { settings, setSettings } = useSettings(); // Destructure setSettings here
+  const { settings, setSettings } = useSettings();
   const timerDuration = settings.timerDuration;
   const { isAuthenticated, logout } = useAuth();
   const [playerHand, setPlayerHand] = useState([]);
@@ -42,7 +42,6 @@ function Play() {
   const [isTimeUp, setIsTimeUp] = useState(false);
   const [timerEnabled, setTimerEnabled] = useState(true);
   const [correctMoves, setCorrectMoves] = useState(0);
-  let [bestMove, setBestMove] = useState("");
   let deckNum = settings.numDecks;
   let surrender = settings.surrender;
   let soft17 = settings.soft17;
@@ -88,7 +87,7 @@ function Play() {
     let aces = 0;
 
     for (let card of hand) {
-      const cardValue = card.split('-')[0]; // Extract the value from card
+      const cardValue = card.split('-')[0];
 
       if (['J', 'Q', 'K'].includes(cardValue)) {
         value += 10;
@@ -110,6 +109,14 @@ function Play() {
   };
 
 
+  const canSplit = (hand) => {
+    if (hand.length === 2) {
+      const firstCardValue = hand[0].split('-')[0];
+      const secondCardValue = hand[1].split('-')[0];
+      return firstCardValue === secondCardValue;
+    }
+    return false;
+  };
 
 
   const dealCards = () => {
@@ -124,60 +131,78 @@ function Play() {
     setGameStatus("Player's Turn");
   };
 
+  const updateStreakCounter = (isCorrectMove) => {
+    if (isCorrectMove) {
+      setCorrectMoves((prevMoves) => {
+        const updatedMoves = prevMoves + 1;
+        const highestMoves = Math.max(updatedMoves, parseInt(localStorage.getItem('highestMoves'), 10) || 0);
+        localStorage.setItem('highestMoves', highestMoves);
+        return updatedMoves;
+      });
+    } else {
+      setCorrectMoves(0);
+    }
+  };
 
   const playerHit = () => {
     if (!isTimeUp) {
+      const bestMove = get_best_action(playerHand, dealerHand[0], deckNum, surrender, soft17);
+      console.log(`Best move before hitting: ${bestMove}`);
+
+      const isCorrectMove = bestMove === 'Hit' || bestMove === 'Double Down / Hit';
+      if (isCorrectMove) {
+        console.log("Correct move: Hit");
+        updateStreakCounter(true);
+      } else {
+        console.log(`Incorrect move. Best move was: ${bestMove}`);
+        updateStreakCounter(false);
+      }
+
       const newCard = dealCard();
       const newHand = [...playerHand, newCard];
-      if (handTimer) {
-        setTimer(timerDuration);
-      }
       setPlayerHand(newHand);
 
       if (calculateHandValue(newHand) > 21) {
         setGameStatus("Player Busted! Dealer Wins!");
+      } else if (handTimer) {
+        setTimer(timerDuration);
       }
-
-      // determine optimal move from the algorithm
-      bestMove = get_best_action(newHand, dealerHand[0], deckNum, surrender, soft17);
-      setBestMove(bestMove);
-
-      if (bestMove === 'Hit' || bestMove === 'Double Down' || bestMove === 'Surrender') {
-        console.log("player made correct move");
-        setCorrectMoves((prevMoves) => {
-          const updatedMoves = prevMoves + 1; // increment streak counter (correctMoves)
-          const highestMoves = Math.max(updatedMoves, parseInt(localStorage.getItem('highestMoves'), 10) || 0);
-          localStorage.setItem('highestMoves', highestMoves);
-          return updatedMoves;
-        });
-      } else {
-        console.log("player made incorrect move");
-        setCorrectMoves(0); // reset streak counter (correctMoves) to 0
-      }
-
-      setTimer(10); // Reset the timer
     }
-  }
+  };
+
+
+  const playerSplit = () => {
+    if (!isTimeUp && playerHand.length === 2 && canSplit(playerHand)) {
+      const bestMove = get_best_action(playerHand, dealerHand[0], deckNum, surrender, soft17);
+      console.log(`Best move before split: ${bestMove}`);
+
+      if (bestMove === 'Split') {
+        console.log("Correct move: Split");
+        setGameStatus("Split, Correct Move!!!");
+        updateStreakCounter(true);
+      } else {
+        console.log(`Incorrect move. Best move was: ${bestMove}`);
+        setGameStatus(`Incorrect - Should have: ${bestMove} instead of Split`);
+        updateStreakCounter(false);
+      }
+
+    }
+  };
 
 
   const playerStand = () => {
     if (!isTimeUp) {
 
-      // determine optimal move from the algorithm
-      bestMove = get_best_action(playerHand, dealerHand[0], deckNum, surrender, soft17);
-      setBestMove(bestMove);
+      const bestMove = get_best_action(playerHand, dealerHand[0], deckNum, surrender, soft17);
+      console.log(`Best move before standing: ${bestMove}`);
 
-      if (bestMove === 'Stand' || bestMove === 'Double Down' || bestMove === 'Surrender') {
-        console.log("player made correct move");
-        setCorrectMoves((prevMoves) => {
-          const updatedMoves = prevMoves + 1; // increment streak counter (correctMoves)
-          const highestMoves = Math.max(updatedMoves, parseInt(localStorage.getItem('highestMoves'), 10) || 0);
-          localStorage.setItem('highestMoves', highestMoves);
-          return updatedMoves;
-        });
+
+      if (bestMove === 'Stand') {
+        console.log("Correct move: Stand");
+        updateStreakCounter(true);
       } else {
-        console.log("player made incorrect move");
-        setCorrectMoves(0); // reset streak counter (correctMoves) to 0
+        console.log(`Incorrect move. Best move was: ${bestMove}`);
+        updateStreakCounter(false);
       }
     }
 
@@ -191,13 +216,12 @@ function Play() {
     let dealerPoints = calculateHandValue(currentDealerHand);
 
     while (dealerPoints < 17) {
-      const newCard = dealCard(); // Make sure this function generates card with suit
+      const newCard = dealCard();
       currentDealerHand.push(newCard);
       dealerPoints = calculateHandValue(currentDealerHand);
     }
 
     setDealerHand(currentDealerHand);
-
 
     if (dealerPoints > 21) {
       setGameStatus("Dealer Busted! Player Wins!");
@@ -210,6 +234,24 @@ function Play() {
     }
   };
 
+  const handleSurrender = () => {
+    if (!isTimeUp) {
+      const bestMove = get_best_action(playerHand, dealerHand[0], deckNum, surrender, soft17);
+      console.log(`Best move before surrendering: ${bestMove}`);
+
+      if (bestMove === 'Surrender') {
+        console.log("Correct move: Surrender");
+        setGameStatus("Player Chose to Surrender - Correct Move!");
+        updateStreakCounter(true);
+      } else {
+        console.log(`Incorrect move. Best move was: ${bestMove}`);
+        setGameStatus(`Incorrect Move - Should Have ${bestMove}`);
+        updateStreakCounter(false);
+      }
+
+    }
+  };
+
 
   const resetGame = () => {
     setPlayerHand([]);
@@ -218,7 +260,7 @@ function Play() {
     if (handTimer) {
       setTimer(timerDuration);
     }
-    setIsTimeUp(false); // Reset the time-up state
+    setIsTimeUp(false); 
   };
 
 
@@ -298,6 +340,7 @@ function Play() {
               </>
             ) : gameState === "Player's Turn" ? (
               <>
+
                 <div className="play-action-buttons">
                   <button className="play-button" onClick={playerHit} disabled={isTimeUp}>
                     Hit
@@ -305,6 +348,17 @@ function Play() {
                   <button className="play-button" onClick={playerStand} disabled={isTimeUp}>
                     Stand
                   </button>
+                  {canSplit(playerHand) && (
+                    <button className="play-button" onClick={playerSplit}>
+                      Split
+                    </button>
+                    )}
+                    {surrender && (
+                      <button className="play-button" onClick={handleSurrender}>
+                        Surrender
+                      </button>
+                    )}
+                  
                 </div>
                 {!isTimeUp && timerEnabled && handTimer && (
                   <div>

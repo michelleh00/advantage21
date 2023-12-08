@@ -1,4 +1,8 @@
 export function get_best_action(playerHand, dealerCard, deckCount, surrender, soft17) {
+    console.log("Received in get_best_action:", playerHand, dealerCard, deckCount, surrender, soft17);
+    
+  
+
 
     console.log(deckCount);
 
@@ -33,6 +37,7 @@ export function get_best_action(playerHand, dealerCard, deckCount, surrender, so
 
     const playerTotal = check_aces(playerHand);
     console.log("Player Total:", playerTotal);
+
 
     if (playerTotal > 21) {
         return "BUST";
@@ -7074,15 +7079,18 @@ export function get_best_action(playerHand, dealerCard, deckCount, surrender, so
     if (deckCount == 4 && !surrender && !soft17) {
         if (is_pair) {
             if (is_pair_of_aces) {
+                console.log("pd_h17_NS_pair(12)")
                 return pd_h17_NS_pair[12]?.[extractCardValue(dealerCard)];
             }
+            console.log("pd_h17_NS_pair")
             return pd_h17_NS_pair[playerTotal]?.[extractCardValue(dealerCard)];
         }
 
         if (containsAce && playerHand.length === 2) {
+            console.log("pd_h17_NS_ace")
             return pd_h17_NS_ace[playerTotal]?.[extractCardValue(dealerCard)];
         }
-
+        console.log("pd_h17_NS_basic")
         return pd_h17_NS_basic[playerTotal]?.[extractCardValue(dealerCard)];
     }
 
