@@ -23,8 +23,8 @@
 
 .timer-menu {
   position: absolute;
-  margin-left: 550px;
-  margin-top: 210px;
+  margin-left: 675px;
+  margin-top: 270px;
   font-size: 30px;
 }
 
@@ -38,7 +38,7 @@
 
 .streaks {
   position: absolute;
-  margin-left: 1350px;
+  margin-left: 1000px;
   margin-top: 180px;
   font-size: 30px;
   line-height: 2;
