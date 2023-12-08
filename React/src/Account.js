@@ -14,8 +14,18 @@ function Account() {
   const navigate = useNavigate();
   const { isAuthenticated, logout } = useAuth();
   const { userDetails } = useAuth();
-  const [selectedFile, setSelectedFile] = useState(null);
+  //const [selectedFile, setSelectedFile] = useState(null);
   const { settings, setSettings } = useSettings();
+  //added
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [highestMoves, setHighestMoves] = useState(0); // New state for highest moves
+  //added
+  useEffect(() => {
+    const storedHighestMoves = localStorage.getItem('highestMoves');
+    if (storedHighestMoves) {
+      setHighestMoves(parseInt(storedHighestMoves, 10));
+    }
+  }, []);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -189,9 +199,7 @@ function Account() {
 
         </div>
         <div className="streaks">
-          Best Session Streak:
-          <br />
-          Longest Streak:
+          Best Session Streak: {highestMoves}
         </div>
       </div>
     </div>

@@ -109,7 +109,7 @@ function Calculator() {
                 </button>
               ))}
             </div>
-            <button className="reset-button" onClick={resetHands}>Reset</button>
+            <button className="reset-button" onClick={resetHands}>Redeal</button>
           </section>
 
         </div>

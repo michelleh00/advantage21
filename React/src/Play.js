@@ -125,7 +125,12 @@ function Play({ timerDuration }) {
   
       if (bestMove === 'Hit' || bestMove === 'Double Down' || bestMove === 'Surrender') {
         console.log("player made correct move");
-        setCorrectMoves(correctMoves + 1); // increment streak counter (correctMoves)
+        setCorrectMoves((prevMoves) => {
+          const updatedMoves = prevMoves + 1; // increment streak counter (correctMoves)
+          const highestMoves = Math.max(updatedMoves, parseInt(localStorage.getItem('highestMoves'), 10) || 0);
+          localStorage.setItem('highestMoves', highestMoves);
+          return updatedMoves;
+        });
       } else {
         console.log("player made incorrect move");
         setCorrectMoves(0); // reset streak counter (correctMoves) to 0
@@ -144,8 +149,13 @@ function Play({ timerDuration }) {
   
       if (bestMove === 'Stand' || bestMove === 'Double Down' || bestMove === 'Surrender') {
         console.log("player made correct move");
-        setCorrectMoves(correctMoves + 1); // increment streak counter (correctMoves)
-      } else {
+        setCorrectMoves((prevMoves) => {
+          const updatedMoves = prevMoves + 1; // increment streak counter (correctMoves)
+          const highestMoves = Math.max(updatedMoves, parseInt(localStorage.getItem('highestMoves'), 10) || 0);
+          localStorage.setItem('highestMoves', highestMoves);
+          return updatedMoves;
+        });
+      }else {
         console.log("player made incorrect move");
         setCorrectMoves(0); // reset streak counter (correctMoves) to 0
       }
@@ -280,7 +290,7 @@ function Play({ timerDuration }) {
               </>
             ) : (
               <button className="play-reset-button" onClick={resetGame}>
-                Reset Game
+                Redeal
               </button>
             )}
           </div>

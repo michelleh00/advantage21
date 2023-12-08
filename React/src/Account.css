@@ -8,16 +8,16 @@
 
 .left-options {
   text-align: left;
-  margin-left: 75px;
-  margin-top: 20px;
+  margin-left: 200px;
+  margin-top: 80px;
   line-height: 2;
   font-size: 30px;
 }
 
 .left-toggles {
   position: absolute;
-  margin-left: 450px;
-  margin-top: 0px;
+  margin-left: 575px;
+  margin-top: 60px;
   font-size: 30px;
 }
 
@@ -36,24 +36,10 @@
   line-height: 2;
 }
 
-.right-options {
-  position: absolute;
-  margin-left: 700px;
-  margin-top: 20px;
-  font-size: 30px;
-}
-
-.right-toggles {
-  position: absolute;
-  margin-left: 1300px;
-  margin-top: 52px;
-  font-size: 30px;
-}
-
 .streaks {
   position: absolute;
-  margin-left: 700px;
-  margin-top: 80px;
+  margin-left: 1350px;
+  margin-top: 180px;
   font-size: 30px;
   line-height: 2;
 }
